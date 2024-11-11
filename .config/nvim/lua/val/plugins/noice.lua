@@ -15,12 +15,12 @@ return {
 		},
 		keys = {
 			{
-				"<leader>nd",
+				"<leader>hd",
 				"<cmd>NoiceDismiss<CR>",
 				desc = "Dismiss notification",
 			},
 			{
-				"<leader>nn",
+				"<leader>hn",
 				"<cmd>Noice<CR>",
 				desc = "Noice Messages",
 			},

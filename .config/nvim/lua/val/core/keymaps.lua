@@ -8,23 +8,17 @@ local keymap = vim.keymap -- for conciseness
 -- use jk to exit insert mode
 keymap.set("n", "<leader>Q", "<cmd>qa!<CR>", { desc = "Quit all force" })
 -- clear search highlights
-keymap.set("n", "<leader>nc", ":nohl<CR>", { desc = "Clear search highlights" })
+keymap.set("n", "<leader>hc", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set("n", "<leader>|", "<C-w>v", { desc = "Split vertical" })
 keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split horizontal" })
-
--- " Redirect change operations to the blackhole to avoid spoiling 'y' register content
-keymap.set("n", "x", '"_x')
-keymap.set("n", "X", '"_X')
-keymap.set("n", "c", '"_c')
-keymap.set("n", "C", '"_C')
 
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
 keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
 
 -- window management
--- keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
--- keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
 

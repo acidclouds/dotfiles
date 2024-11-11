@@ -1,4 +1,5 @@
 vim.cmd("let g:netrw_liststyle = 3")
+vim.cmd("let g:tmux_navigator_no_mappings = 1")
 local opt = vim.opt -- for conciseness
 
 -- line numbers

@@ -18,6 +18,7 @@ return {
 				"lua_ls",
 				"pyright",
 				"ts_ls",
+				"java_language_server",
 			},
 		})
 		mason_tool_installer.setup({
@@ -25,6 +26,7 @@ return {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
 				"eslint_d",
+				"google-java-format",
 			},
 		})
 	end,
