@@ -13,6 +13,7 @@ return {
 		telescope.setup({
 			defaults = {
 				layout_strategy = "vertical",
+				sorting_strategy = "ascending",
 				layout_config = { height = 0.9 },
 				path_display = { "smart" },
 				mappings = {
@@ -23,14 +24,27 @@ return {
 					},
 				},
 			},
+			extensions = {
+				file_browser = {
+					grouped = true,
+					hidden = { file_browser = true, folder_browser = true },
+				},
+			},
 		})
 
 		telescope.load_extension("fzf")
+		telescope.load_extension("file_browser")
 
 		-- set keymaps
 		local keymap = vim.keymap -- for conciseness
 
 		keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
+		keymap.set(
+			"n",
+			"<leader>fe",
+			":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+			{ desc = "File Explorer" }
+		)
 		keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
 		keymap.set(
 			"n",

@@ -1,3 +1,4 @@
+local colors = require("catppuccin.palettes.mocha")
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -13,8 +14,10 @@ return {
 				section_separators = { left = "", right = "" },
 			},
 			sections = {
-				lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-				lualine_b = { "branch", "filename", },
+				lualine_a = {
+					{ "mode", separator = { left = "" }, right_padding = 2 },
+				},
+				lualine_b = { "branch", "filename" },
 				lualine_c = {
 					{
 						function()
@@ -26,6 +29,15 @@ return {
 					},
 				},
 				lualine_x = {
+					{
+						function()
+							return require("noice").api.status.mode.get()
+						end,
+						cond = function()
+							return package.loaded["noice"] and require("noice").api.status.mode.has()
+						end,
+						color = { fg = colors.flamingo, gui = "bold" },
+					},
 					{
 						lazy_status.updates,
 						cond = lazy_status.has_updates,

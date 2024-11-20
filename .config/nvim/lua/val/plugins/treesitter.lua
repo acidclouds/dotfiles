@@ -28,6 +28,8 @@ return {
 				"tsx",
 				"yaml",
 				"html",
+				"go",
+				"make",
 				"css",
 				"prisma",
 				"markdown",

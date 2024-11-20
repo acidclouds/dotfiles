@@ -18,6 +18,7 @@ return {
 				"lua_ls",
 				"pyright",
 				"ts_ls",
+				"gopls",
 				"java_language_server",
 			},
 		})
@@ -26,7 +27,9 @@ return {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
 				"eslint_d",
+				"golangci-lint",
 				"google-java-format",
+				"gofumpt",
 			},
 		})
 	end,
