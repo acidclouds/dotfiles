@@ -1,6 +1,6 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
+	branch = "master",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -21,6 +21,15 @@ return {
 						["<C-k>"] = actions.move_selection_previous, -- move to prev result
 						["<C-j>"] = actions.move_selection_next, -- move to next result
 						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+					},
+					n = {
+						["<C-k>"] = actions.preview_scrolling_up,
+						["<C-j>"] = actions.preview_scrolling_down,
+						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+						["<C-l>"] = actions.preview_scrolling_right,
+						["<C-h>"] = actions.preview_scrolling_left,
+						["l"] = actions.results_scrolling_right,
+						["h"] = actions.results_scrolling_left,
 					},
 				},
 			},

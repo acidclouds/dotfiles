@@ -20,6 +20,7 @@ return {
 				"ts_ls",
 				"gopls",
 				"java_language_server",
+				"csharp_ls",
 			},
 		})
 		mason_tool_installer.setup({
