@@ -10,7 +10,7 @@ keymap.set("n", "<leader>Q", "<cmd>qa!<CR>", { desc = "Quit all force" })
 -- clear search highlights
 keymap.set("n", "<leader>hc", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set("n", "<leader>|", "<C-w>v", { desc = "Split vertical" })
-keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split horizontal" })
+keymap.set("n", "<leader>_", "<C-w>s", { desc = "Split horizontal" })
 
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
@@ -43,7 +43,6 @@ keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer
 -- })
 keymap.set("n", "L", "<cmd>bnext<CR>", { desc = "Next buffer" })
 keymap.set("n", "H", "<cmd>bprev<CR>", { desc = "Previous buffer" })
-keymap.set("n", "<leader>bd", "<cmd>Bdelete<CR>", { desc = "Buffer Delete" })
 keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
 keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
 keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer

@@ -16,6 +16,7 @@ return {
 				sorting_strategy = "ascending",
 				layout_config = { height = 0.9 },
 				path_display = { "smart" },
+				dynamic_preview_title = true,
 				mappings = {
 					i = {
 						["<C-k>"] = actions.move_selection_previous, -- move to prev result
@@ -37,6 +38,7 @@ return {
 				file_browser = {
 					grouped = true,
 					hidden = { file_browser = true, folder_browser = true },
+					use_ui_input = false,
 				},
 			},
 		})
@@ -47,33 +49,38 @@ return {
 		-- set keymaps
 		local keymap = vim.keymap -- for conciseness
 
-		keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
+		keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr><esc>", { desc = "Fuzzy find files in cwd" })
 		keymap.set(
 			"n",
 			"<leader>fe",
-			":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+			":Telescope file_browser path=%:p:h select_buffer=true<CR><esc>",
 			{ desc = "File Explorer" }
 		)
 		keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
 		keymap.set(
 			"n",
 			"<leader>fl",
-			"<cmd>Telescope lsp_workspace_symbols<cr>",
+			"<cmd>Telescope lsp_workspace_symbols<cr><esc>",
 			{ desc = "Find current document LSP symbols in workspace" }
 		)
 		keymap.set(
 			"n",
 			"<leader>fL",
-			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr><esc>",
 			{ desc = "Find in all LSP sworkspace symbols" }
 		)
-		keymap.set("n", "<leader>ft", "<cmd>Telescope treesitter<cr>", { desc = "Find symbol in current buffer" })
+		keymap.set("n", "<leader>ft", "<cmd>Telescope treesitter<cr><esc>", { desc = "Find symbol in current buffer" })
 		keymap.set(
 			"n",
 			"<leader>fb",
 			"<cmd>Telescope current_buffer_fuzzy_find<cr>",
 			{ desc = "Find string in current buffer" }
 		)
-		keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+		keymap.set(
+			"n",
+			"<leader>fc",
+			"<cmd>Telescope grep_string<cr><esc>",
+			{ desc = "Find string under cursor in cwd" }
+		)
 	end,
 }
