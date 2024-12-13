@@ -14,6 +14,6 @@ return {
 		end, { desc = "Yank current cursor to quickfixlist", noremap = true })
 
 		vim.keymap.set("n", "<leader>yL", ":lopen<cr>", { desc = "Open Locationlist" })
-		vim.keymap.set("n", "<leader>yC", ":copen<cr>", { desc = "Open Quickfixlist" })
+		vim.keymap.set("n", "<leader>yQ", ":copen<cr>", { desc = "Open Quickfixlist" })
 	end,
 }
