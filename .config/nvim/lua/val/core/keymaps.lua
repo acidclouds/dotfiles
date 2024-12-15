@@ -1,6 +1,32 @@
 -- set leader key to space
 vim.g.mapleader = " "
 
+local function ltrim(s)
+	return s:match("^%s*(.*)")
+end
+
+function Sllist(filename)
+	filename = filename == "" and "qflist.vim" or filename
+	-- Get qflist
+	local lflist = vim.api.nvim_cmd({ cmd = "clist" }, { output = true })
+	local lines = {}
+	for s in lflist:gmatch("[^\r\n]+") do
+		table.insert(lines, ltrim(s))
+	end
+	local outlines = {}
+	for _, line in ipairs(lines) do
+		local i, j = string.find(line, " ")
+		table.insert(outlines, string.sub(line, j + 1))
+	end
+	vim.fn.writefile(table.concat(outlines, "\n") .. string.char(0), filename, "a")
+end
+
+function Lllist(filename)
+	filename = filename == "" and "qflist.vim" or filename
+	vim.cmd.cfile(filename)
+	vim.cmd.copen()
+end
+
 local keymap = vim.keymap -- for conciseness
 -- local wk = require("which-key")
 -- -- General Keymaps -------------------

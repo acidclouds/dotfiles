@@ -5,10 +5,11 @@ return {
 		require("bqf").setup({
 			preview = {
 				winblend = 0,
+				auto_preview = false,
 			},
 			func_map = {
-				pscrollup = "<C-k>",
-				pscrolldown = "<C-j>",
+				pscrollup = "<C-u>",
+				pscrolldown = "<C-d>",
 			},
 		})
 	end,

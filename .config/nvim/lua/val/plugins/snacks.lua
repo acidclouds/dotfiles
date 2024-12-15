@@ -26,9 +26,10 @@ return {
 				{
 					pane = 2,
 					section = "terminal",
-					cmd = "chafa ~/.config/india.jpg --format symbols --symbols vhalf --size 60x20 --stretch; sleep .1",
-					height = 20,
-					width = 60,
+					cmd = "ascii-image-converter ~/.config/max.png -c -C -H 40",
+					-- cmd = "chafa ~/.config/india.jpg --format symbols --symbols vhalf --size 60x20 --stretch; sleep .1",
+					height = 40,
+					-- width = 60,
 					padding = 1,
 				},
 				{ section = "keys", gap = 1, padding = 1 },
@@ -183,6 +184,24 @@ return {
 			end,
 			desc = "Prev Reference",
 			mode = { "n", "t" },
+		},
+		{
+			"<leader>ys",
+			function()
+				Snacks.input.input({ prompt = "Enter ToDo list file name to save" }, function(response)
+					Sllist(response)
+				end)
+			end,
+			desc = "Save ToDo list to file",
+		},
+		{
+			"<leader>yg",
+			function()
+				Snacks.input.input({ prompt = "Enter ToDo list file name to load" }, function(response)
+					Lllist(response)
+				end)
+			end,
+			desc = "Save ToDo list to file",
 		},
 	},
 }
