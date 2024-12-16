@@ -79,6 +79,11 @@ return {
 			lazygit = {
 				height = 0.8,
 			},
+			notification = {
+				wo = {
+					wrap = true,
+				},
+			},
 			terminal = {
 				bo = {
 					filetype = "snacks_terminal",
@@ -186,7 +191,7 @@ return {
 			mode = { "n", "t" },
 		},
 		{
-			"<leader>ys",
+			"<leader>qs",
 			function()
 				Snacks.input.input({ prompt = "Enter ToDo list file name to save" }, function(response)
 					Sllist(response)
@@ -195,7 +200,7 @@ return {
 			desc = "Save ToDo list to file",
 		},
 		{
-			"<leader>yg",
+			"<leader>qg",
 			function()
 				Snacks.input.input({ prompt = "Enter ToDo list file name to load" }, function(response)
 					Lllist(response)
