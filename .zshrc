@@ -138,6 +138,7 @@ alias cat="batcat --paging=never"
 eval "$(zoxide init zsh)"
 export PATH="$PATH:/opt/nvim-linux64/bin:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
+alias nv="nvim"
 
 eval "$(thefuck --alias fk)"
 
