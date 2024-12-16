@@ -21,12 +21,12 @@ return {
 					i = {
 						["<C-k>"] = actions.move_selection_previous, -- move to prev result
 						["<C-j>"] = actions.move_selection_next, -- move to next result
-						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+						["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
 					},
 					n = {
 						["<C-k>"] = actions.preview_scrolling_up,
 						["<C-j>"] = actions.preview_scrolling_down,
-						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+						["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
 						["<C-l>"] = actions.preview_scrolling_right,
 						["<C-h>"] = actions.preview_scrolling_left,
 						["l"] = actions.results_scrolling_right,
@@ -39,6 +39,21 @@ return {
 					grouped = true,
 					hidden = { file_browser = true, folder_browser = true },
 					use_ui_input = false,
+					mappings = {
+						n = {
+							["<C-y>"] = function()
+								local entry = require("telescope.actions.state").get_selected_entry()
+								local cb_opts = vim.opt.clipboard:get()
+								if vim.tbl_contains(cb_opts, "unnamed") then
+									vim.fn.setreg("*", entry.path)
+								end
+								if vim.tbl_contains(cb_opts, "unnamedplus") then
+									vim.fn.setreg("+", entry.path)
+								end
+								vim.fn.setreg("", entry.path)
+							end,
+						},
+					},
 				},
 			},
 		})

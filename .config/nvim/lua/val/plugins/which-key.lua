@@ -31,7 +31,7 @@ return {
 			{ "<leader>c", group = "Change" },
 			{ "<leader>s", group = "Split" },
 			{ "<leader>h", group = "Highlights" },
-			{ "<leader>q", group = "Quickfix" },
+			{ "<leader>y", group = "Quickfix" },
 		},
 		-- your configuration comes here
 		-- or leave it empty to use the default settings

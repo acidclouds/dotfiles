@@ -5,7 +5,7 @@ local function ltrim(s)
 	return s:match("^%s*(.*)")
 end
 
-function Sllist(filename)
+function SaveClist(filename)
 	filename = filename == "" and "qflist.vim" or filename
 	-- Get qflist
 	local lflist = vim.api.nvim_cmd({ cmd = "clist" }, { output = true })
@@ -15,17 +15,46 @@ function Sllist(filename)
 	end
 	local outlines = {}
 	for _, line in ipairs(lines) do
-		local i, j = string.find(line, " ")
+		local _, j = string.find(line, " ")
 		table.insert(outlines, string.sub(line, j + 1))
 	end
-	vim.fn.writefile(table.concat(outlines, "\n") .. string.char(0), filename, "a")
+	local f = io.open(filename, "w")
+	if f ~= nil then
+		f:write(table.concat(outlines, "\n"))
+		f:close()
+	end
 end
 
-function Lllist(filename)
+function LoadClist(filename)
 	filename = filename == "" and "qflist.vim" or filename
 	vim.cmd.cfile(filename)
 	vim.cmd.copen()
 end
+
+function ToggleQf()
+	local qf_exists = false
+	for _, win in pairs(vim.fn.getwininfo()) do
+		if win["quickfix"] == 1 then
+			qf_exists = true
+		end
+	end
+	if qf_exists == true then
+		vim.cmd("cclose")
+		return
+	end
+	if not vim.tbl_isempty(vim.fn.getqflist()) then
+		vim.cmd("copen")
+	end
+end
+
+vim.api.nvim_exec(
+	[[
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END]],
+	false
+)
 
 local keymap = vim.keymap -- for conciseness
 -- local wk = require("which-key")

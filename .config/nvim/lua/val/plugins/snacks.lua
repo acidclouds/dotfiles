@@ -26,11 +26,9 @@ return {
 				{
 					pane = 2,
 					section = "terminal",
-					cmd = "ascii-image-converter ~/.config/max.png -c -C -H 40",
-					-- cmd = "chafa ~/.config/india.jpg --format symbols --symbols vhalf --size 60x20 --stretch; sleep .1",
-					height = 40,
-					-- width = 60,
-					padding = 1,
+					cmd = "ascii-image-converter ~/.config/max.png -c -C -H 30; sleep .1",
+					height = 33,
+					width = 61,
 				},
 				{ section = "keys", gap = 1, padding = 1 },
 				{ pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
@@ -82,6 +80,12 @@ return {
 			notification = {
 				wo = {
 					wrap = true,
+				},
+			},
+			input = {
+				keys = {
+					i_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "i" },
+					q = "cancel",
 				},
 			},
 			terminal = {
@@ -191,22 +195,49 @@ return {
 			mode = { "n", "t" },
 		},
 		{
-			"<leader>qs",
+			"<leader>ys",
 			function()
-				Snacks.input.input({ prompt = "Enter ToDo list file name to save" }, function(response)
-					Sllist(response)
+				local defname = vim.fn.system({ "git", "branch", "--show-current" })
+				if vim.v.shell_error == 0 then
+					defname = string.gsub(defname, "%s", "") .. ".txt"
+				else
+					defname = "todo.txt"
+				end
+				Snacks.input.input({ prompt = "Save file to: " .. vim.env.PWD, default = defname }, function(response)
+					if response then
+						SaveClist(response)
+					else
+						Snacks.notify.warn("Did not save list to file")
+					end
 				end)
 			end,
 			desc = "Save ToDo list to file",
 		},
 		{
-			"<leader>qg",
+			"<leader>yl",
 			function()
-				Snacks.input.input({ prompt = "Enter ToDo list file name to load" }, function(response)
-					Lllist(response)
+				local defname = vim.fn.system({ "git", "branch", "--show-current" })
+				if vim.v.shell_error == 0 then
+					defname = string.gsub(defname, "%s", "") .. ".txt"
+				else
+					defname = "todo.txt"
+				end
+				Snacks.input.input({ prompt = "Load from: " .. vim.env.PWD, default = defname }, function(response)
+					if response then
+						LoadClist(response)
+					else
+						Snacks.notify.warn("Did not load list from file")
+					end
 				end)
 			end,
-			desc = "Save ToDo list to file",
+			desc = "Load ToDo list from file",
+		},
+		{
+			"<leader>yq",
+			function()
+				ToggleQf()
+			end,
+			desc = "Toggle Quickfix list window",
 		},
 	},
 }
