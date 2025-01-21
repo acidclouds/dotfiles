@@ -5,12 +5,12 @@ return {
 	config = function()
 		local lualine = require("lualine")
 		local lazy_status = require("lazy.status") -- to configure lazy pending updates count
+		local mocha = require("catppuccin.palettes").get_palette("mocha")
 
 		-- configure lualine with modified theme
 		lualine.setup({
 			options = {
 				theme = "catppuccin",
-				component_separators = "",
 				section_separators = { left = "", right = "" },
 			},
 			sections = {
@@ -25,7 +25,20 @@ return {
 						end,
 					},
 				},
-				lualine_b = { "branch", "filename" },
+				lualine_b = {
+					{
+						"branch",
+						fmt = function(str)
+							if #str > 20 then
+								return str:sub(1, 20) .. ".."
+							else
+								return str
+							end
+						end,
+						color = { bg = mocha.surface1 }, --"#45475a"
+					},
+					{ "filename", color = { bg = mocha.surface0 } }, -- "#313244"
+				},
 				lualine_c = {
 					{
 						function()

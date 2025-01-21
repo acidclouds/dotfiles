@@ -61,6 +61,7 @@ return {
 					noice = true,
 					mason = true,
 					alpha = true,
+					snacks = true,
 					nvim_surround = true,
 					lsp_trouble = true,
 					telescope = {

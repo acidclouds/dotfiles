@@ -5,6 +5,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope.nvim",
 		},
+		enabled = false,
 		config = function()
 			require("telescope").setup({
 				extensions = {
@@ -21,6 +22,11 @@ return {
 								-- installing as a dependency of telescope in it's `requirements` and loading this
 								-- extension from there instead of having the separate plugin definition as outlined
 								-- above.
+								["<C-cr>"] = require("telescope-undo.actions").yank_additions,
+								["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+								["<cr>"] = require("telescope-undo.actions").restore,
+							},
+							n = {
 								["<C-cr>"] = require("telescope-undo.actions").yank_additions,
 								["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
 								["<cr>"] = require("telescope-undo.actions").restore,

@@ -47,7 +47,7 @@ ZSH_THEME="robbyrussell"
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -70,16 +70,64 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+# autoload -Uz compinit; compinit
+
+# ZVM_INIT_MODE=sourcing
+plugins=(
+  git
+  fzf
+  fzf-tab
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  ohmyzsh-full-autoupdate
+)
+
+show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else batcat -n --color=always {}; fi"
+#
+ # export FZF_CTRL_T_OPTS="--preview-window 'down:+{2}-5' --preview '$show_file_or_dir_preview'"
+ # export FZF_ALT_C_OPTS="--preview-window 'down:+{2}-5' --preview 'eza --tree --color=always {} | head -200'"
+# export FZF_DEFAULT_COMMAND='fd --type file --strip-cwd-prefix --hidden'
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+#
+# # Advanced customization of fzf options via _fzf_comprun function
+# # - The first argument to the function is the name of the command.
+# # - You should make sure to pass the rest of the arguments to fzf.
+# _fzf_comprun() {
+#   local command=$1
+#   shift
+#
+#   case "$command" in
+#     cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+#     export|unset) fzf --preview "eval 'echo ${}'"         "$@" ;;
+#     ssh)          fzf --preview 'dig {}'                   "$@" ;;
+#     *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
+#   esac
+# }
+
+# Setting fd as the default source for fzf
+# FD_OPTS="--hidden --follow --exclude .git"
+# export FZF_CTRL_T_COMMAND="fd --type f $FD_OPTS"
+# export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS"
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --exclude .git"
+# export FZF_DEFAULT_OPTIONS="--preview-window down --height 50%"
+export FZF_CTRL_R_OPTS="
+  --preview 'echo {2..} | batcat --color=always -pl sh'
+  --preview-window up:3:wrap
+  --color header:italic"
+
+# source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# # Append a command directly
+
+# source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -106,31 +154,23 @@ source $ZSH/oh-my-zsh.sh
 HISTFILE=$HOME/.zhistory
 SAVEHIST=1000
 HISTSIZE=999
+
+# zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+function my_init() {
+  source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+}
+
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+autoload -U compinit; compinit
+
 setopt share_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
-show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else batcat -n --color=always --line-range :500 {}; fi"
+setopt GLOB_DOTS
+source $ZSH/oh-my-zsh.sh
 
-export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
-export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
-
-# Advanced customization of fzf options via _fzf_comprun function
-# - The first argument to the function is the name of the command.
-# - You should make sure to pass the rest of the arguments to fzf.
-_fzf_comprun() {
-  local command=$1
-  shift
-
-  case "$command" in
-    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
-    export|unset) fzf --preview "eval 'echo ${}'"         "$@" ;;
-    ssh)          fzf --preview 'dig {}'                   "$@" ;;
-    *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
-  esac
-}
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export BAT_THEME=Coldark-Dark
 alias ls="eza -l -a --group-directories-first --icons=always"
 alias lst="eza -l -a --group-directories-first --total-size --icons=always"
@@ -146,9 +186,56 @@ function sfg() {
   rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --ansi --no-sort --preview-window 'down:+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
 }
 
+ # disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':fzf-tab:*' use-fzf-default-opts no
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+zstyle ':completion:*' fzf-search-display true
+# zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $word'
+# zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
+# 	fzf-preview 'echo ${(P)word}'
+# zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:*' fzf-min-height 20
+# zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# zstyle ':fzf-tab:complete:*:options' fzf-preview
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l -a --group-directories-first --color=always --icons=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window=down --height=50% 
+zstyle ':fzf-tab:complete:*:*' fzf-flags --preview-window=down --height=50% 
+
+zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
+export LESSOPEN='|~/.config/.lessfilter %s'
+# custom fzf flags
+# NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
+# zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+# zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+# zstyle ':fzf-tab:complete:ls:*' fzf-preview 'if [ -d $realpath ]; then eza --tree --color=always $realpath ; else batcat -n --color=always $realpath; fi'
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
+export LS_COLORS="$(vivid generate catppuccin-mocha)"
+
 eval "$(starship init zsh)"
+
+  # autoload -U compinit; compinit
+#   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#   source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh
+#
+# source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+  # autoload -U compinit; compinit
+
 if ! [[ -v TMUX ]]; then
-	tmux new-session -A -s val
+ 	tmux new-session -A -s val
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

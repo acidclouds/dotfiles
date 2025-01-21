@@ -24,13 +24,12 @@ return {
 			sections = {
 				{ section = "header" },
 				{
-					pane = 2,
 					section = "terminal",
-					cmd = "ascii-image-converter ~/.config/max.png -c -C -H 30; sleep .1",
-					height = 33,
+					cmd = "ascii-image-converter ~/.config/max.png -c -C -H 25; sleep .1",
+					height = 28,
 					width = 61,
 				},
-				{ section = "keys", gap = 1, padding = 1 },
+				{ pane = 2, section = "keys", gap = 1, padding = 1 },
 				{ pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
 				{ pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
 				{
@@ -203,13 +202,16 @@ return {
 				else
 					defname = "todo.txt"
 				end
-				Snacks.input.input({ prompt = "Save file to: " .. vim.env.PWD, default = defname }, function(response)
-					if response then
-						SaveClist(response)
-					else
-						Snacks.notify.warn("Did not save list to file")
+				Snacks.input.input(
+					{ prompt = "Save file to: " .. vim.fn.getcwd(), default = defname },
+					function(response)
+						if response then
+							SaveClist(response)
+						else
+							Snacks.notify.warn("Did not save list to file")
+						end
 					end
-				end)
+				)
 			end,
 			desc = "Save ToDo list to file",
 		},
@@ -222,7 +224,7 @@ return {
 				else
 					defname = "todo.txt"
 				end
-				Snacks.input.input({ prompt = "Load from: " .. vim.env.PWD, default = defname }, function(response)
+				Snacks.input.input({ prompt = "Load from: " .. vim.fn.getcwd(), default = defname }, function(response)
 					if response then
 						LoadClist(response)
 					else
@@ -231,6 +233,62 @@ return {
 				end)
 			end,
 			desc = "Load ToDo list from file",
+		},
+		{
+			"<leader>hn",
+			function()
+				Snacks.notifier.show_history()
+			end,
+			desc = "Notification History",
+		},
+		{
+			"<leader>ff",
+			function()
+				Snacks.picker.smart()
+			end,
+			desc = "Find files in CWD",
+		},
+		{
+			"<leader>fr",
+			function()
+				Snacks.picker.resume()
+			end,
+			desc = "Resume last search",
+		},
+		{
+			"<leader>fl",
+			function()
+				Snacks.picker.lines()
+			end,
+			desc = "Find string in current buffer",
+		},
+		{
+			"<leader>fc",
+			function()
+				Snacks.picker.grep_word()
+			end,
+			desc = "Find string under cursor in cwd",
+		},
+		{
+			"<leader>fo",
+			function()
+				Snacks.picker.recent()
+			end,
+			desc = "Recent files",
+		},
+		{
+			"<leader>fs",
+			function()
+				Snacks.picker.grep()
+			end,
+			desc = "Find string in cwd",
+		},
+		{
+			"<leader>U",
+			function()
+				Snacks.picker.undo()
+			end,
+			desc = "Undo History",
 		},
 		{
 			"<leader>yq",

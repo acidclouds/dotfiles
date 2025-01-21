@@ -39,11 +39,6 @@ return {
 				"<cmd>NoiceDismiss<CR>",
 				desc = "Dismiss notification",
 			},
-			{
-				"<leader>hn",
-				"<cmd>Noice<CR>",
-				desc = "Noice Messages",
-			},
 		},
 	},
 }
