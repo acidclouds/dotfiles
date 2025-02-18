@@ -119,7 +119,7 @@ return {
 					i_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "i" },
 					q = "cancel",
 				},
-				row = 30,
+				row = 37,
 			},
 			terminal = {
 				bo = {
@@ -292,7 +292,9 @@ return {
 		},
 		{
 			"<leader>hn",
-			":NoiceSnacks<CR>",
+			function()
+				Snacks.picker.notifications()
+			end,
 			desc = "Notification History",
 		},
 		{

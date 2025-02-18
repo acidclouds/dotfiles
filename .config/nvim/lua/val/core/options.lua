@@ -1,8 +1,10 @@
 vim.cmd("let g:netrw_liststyle = 3")
 vim.cmd('let g:border_style = "single"')
 vim.cmd("let g:tmux_navigator_no_mappings = 1")
+
 -- vim.cmd("let g:suda_smart_edit = 1")
 local opt = vim.opt -- for conciseness
+opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- line numbers
 opt.relativenumber = true -- show relative line numbers
