@@ -35,6 +35,7 @@ return {
 				"markdown",
 				"markdown_inline",
 				"java",
+				"regex",
 				"svelte",
 				"graphql",
 				"bash",

@@ -63,9 +63,10 @@ local keymap = vim.keymap -- for conciseness
 -- use jk to exit insert mode
 keymap.set("n", "<leader>Q", "<cmd>qa!<CR>", { desc = "Quit all force" })
 -- clear search highlights
-keymap.set("n", "<leader>hc", ":nohl<CR>", { desc = "Clear search highlights" })
+keymap.set("n", "<leader>hx", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set("n", "<leader>|", "<C-w>v", { desc = "Split vertical" })
 keymap.set("n", "<leader>_", "<C-w>s", { desc = "Split horizontal" })
+keymap.set("n", "gm", ":Man<CR>", { desc = "Open man page under cursor" })
 
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment

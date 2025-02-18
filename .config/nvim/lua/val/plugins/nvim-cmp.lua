@@ -76,8 +76,10 @@ return {
 				end, { "i", "s" }),
 			}),
 			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
+				completion = { border = "single" },
+				documentation = { border = "single" },
+				-- completion = cmp.config.window.bordered(),
+				-- documentation = cmp.config.window.bordered(),
 			},
 			-- sources for autocompletion
 			sources = cmp.config.sources({

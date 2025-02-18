@@ -10,7 +10,27 @@ return {
 		-- end, { desc = "Yank current cursor to locationlist", noremap = true })
 
 		vim.keymap.set({ "n", "v" }, "<leader>ya", function()
-			locationist.yank({ send_to = "clist", expand_str = "%:p", comment = "default" })
+			Snacks.input.input({ prompt = "Comment: " }, function(response)
+				if response then
+					local commentStr = response
+					locationist.yank({
+						send_to = "clist",
+						expand_str = "%:p",
+						comment = function()
+							return commentStr
+						end,
+					})
+				end
+			end)
+			-- locationist.yank({
+			-- 	send_to = "clist",
+			-- 	expand_str = "%:p",
+			-- 	comment = function()
+			-- 		local input_comment = vim.fn.input("Comment: ")
+			--
+			-- 		return input_comment
+			-- 	end,
+			-- })
 		end, { desc = "Yank current cursor to quickfixlist", noremap = true })
 		vim.keymap.set({ "n", "v" }, "<leader>yA", function()
 			locationist.yank({

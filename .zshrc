@@ -176,7 +176,8 @@ alias ls="eza -l -a --group-directories-first --icons=always"
 alias lst="eza -l -a --group-directories-first --total-size --icons=always"
 alias cat="batcat --paging=never"
 eval "$(zoxide init zsh)"
-export PATH="$PATH:/opt/nvim-linux64/bin:/home/val/.local/bin"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin"
+# export PATH="$PATH:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
 alias nv="nvim"
 
@@ -197,20 +198,20 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
 zstyle ':completion:*' fzf-search-display true
-# zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $word'
-# zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
-# 	fzf-preview 'echo ${(P)word}'
-# zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $word'
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
+	fzf-preview 'echo ${(P)word}'
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:*' fzf-min-height 20
-# zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
-# zstyle ':fzf-tab:complete:*:options' fzf-preview
+zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+zstyle ':fzf-tab:complete:*:options' fzf-preview
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l -a --group-directories-first --color=always --icons=always $realpath'
 zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window=down --height=50% 
 zstyle ':fzf-tab:complete:*:*' fzf-flags --preview-window=down --height=50% 
 
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
-export LESSOPEN='|~/.config/.lessfilter %s'
+export LESSOPEN='| ~/.config/.lessfilter "%s"'
 # custom fzf flags
 # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
 # zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept

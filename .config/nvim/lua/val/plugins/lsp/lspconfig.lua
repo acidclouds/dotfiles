@@ -7,9 +7,26 @@ return {
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} },
 	},
+	opts = {
+		ui = {
+			windows = {
+				default_options = {
+					border = "rounded",
+				},
+			},
+		},
+	},
 	config = function()
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
+		local win = require("lspconfig.ui.windows")
+		local _default_opts = win.default_opts
+
+		win.default_opts = function(options)
+			local opts = _default_opts(options)
+			opts.border = "rounded"
+			return opts
+		end
 
 		-- import mason_lspconfig plugin
 		local mason_lspconfig = require("mason-lspconfig")
@@ -27,20 +44,20 @@ return {
 				local opts = { buffer = ev.buf, silent = true }
 
 				-- set keybinds
-				opts.desc = "Show LSP references"
-				keymap.set("n", "<leader>lr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+				-- opts.desc = "Show LSP references"
+				-- keymap.set("n", "<leader>lr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
 				opts.desc = "Go to declaration"
 				keymap.set("n", "<leader>lD", vim.lsp.buf.declaration, opts) -- go to declaration
 
-				opts.desc = "Show LSP definitions"
-				keymap.set("n", "<leader>ld", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
-
-				opts.desc = "Show LSP implementations"
-				keymap.set("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
-
-				opts.desc = "Show LSP type definitions"
-				keymap.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+				--     opts.desc = "Show LSP definitions"
+				-- keymap.set("n", "<leader>ld", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+				--
+				-- opts.desc = "Show LSP implementations"
+				-- keymap.set("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
+				--
+				-- opts.desc = "Show LSP type definitions"
+				-- keymap.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
 				opts.desc = "See available code actions"
 				keymap.set({ "n", "v" }, "<leader>la", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
@@ -48,11 +65,13 @@ return {
 				opts.desc = "Smart rename"
 				keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts) -- smart rename
 
-				opts.desc = "Show buffer diagnostics"
-				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+				-- opts.desc = "Show buffer diagnostics"
+				-- keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
 				opts.desc = "Show line diagnostics"
-				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+				keymap.set("n", "<leader>d", function()
+					vim.diagnostic.open_float({ border = "rounded" })
+				end, opts) -- show diagnostics for line
 
 				opts.desc = "Go to previous diagnostic"
 				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
@@ -85,6 +104,7 @@ return {
 				lspconfig[server_name].setup({
 					capabilities = capabilities,
 					single_file_support = true,
+					border = "rounded",
 				})
 			end,
 			["java_language_server"] = function()

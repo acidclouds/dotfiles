@@ -22,6 +22,8 @@ return {
 			{ "N", "Nzz", mode = "n", hidden = true },
 			{ "<c-d>", "<c-d>zz", mode = "n", hidden = true },
 			{ "<c-u>", "<c-u>zz", mode = "n", hidden = true },
+			{ "<c-f>", "<c-f>zz", mode = "n", hidden = true },
+			{ "<c-b>", "<c-b>zz", mode = "n", hidden = true },
 			-- { "J", "<nop>", mode = "n", hidden = true },
 			{ "gu", "<nop>", mode = "n", hidden = true },
 			{ "gU", "<nop>", mode = "n", hidden = true },

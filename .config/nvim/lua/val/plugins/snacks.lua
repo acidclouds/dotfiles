@@ -6,6 +6,36 @@ return {
 		-- your configuration comes here
 		-- or leave it empty to use the default settings
 		-- refer to the configuration section below
+		picker = {
+			win = {
+				input = {
+					keys = {
+						["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+						["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+						["<c-h>"] = { "preview_scroll_left", mode = { "i", "n" } },
+						["<c-l>"] = { "preview_scroll_right", mode = { "i", "n" } },
+						["h"] = { "list_scroll_left", mode = { "n" } },
+						["l"] = { "list_scroll_right", mode = { "n" } },
+					},
+				},
+				list = {
+					keys = {
+						["<c-u>"] = "preview_scroll_up",
+						["<c-d>"] = "preview_scroll_down",
+						["<c-h>"] = "preview_scroll_left",
+						["<c-l>"] = "preview_scroll_right",
+					},
+				},
+				preview = {
+					keys = {
+						["<c-u>"] = "preview_scroll_up",
+						["<c-d>"] = "preview_scroll_down",
+						["<c-h>"] = "preview_scroll_left",
+						["<c-l>"] = "preview_scroll_right",
+					},
+				},
+			},
+		},
 		terminal = {
 			-- your terminal configuration comes here
 			-- or leave it empty to use the default settings
@@ -28,6 +58,7 @@ return {
 					cmd = "ascii-image-converter ~/.config/max.png -c -C -H 25; sleep .1",
 					height = 28,
 					width = 61,
+					-- align = "right",
 				},
 				{ pane = 2, section = "keys", gap = 1, padding = 1 },
 				{ pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
@@ -53,6 +84,8 @@ return {
 		input = { enabled = true },
 		notifier = { enabled = true },
 		quickfile = { enabled = true },
+		-- statuscolumn = { enabled = true },
+		explorer = { enabled = true },
 		toggle = {
 			enabled = true,
 			map = vim.keymap.set, -- keymap.set function to use
@@ -86,6 +119,7 @@ return {
 					i_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "i" },
 					q = "cancel",
 				},
+				row = 30,
 			},
 			terminal = {
 				bo = {
@@ -107,17 +141,18 @@ return {
 						end
 					end,
 					term_normal = {
-						"<esc>",
+						"j",
 						function(self)
-							-- self.esc_timer = self.esc_timer or (vim.uv or vim.loop).new_timer()
-							-- if self.esc_timer:is_active() then
-							-- 	self.esc_timer:stop()
-							-- 	vim.cmd("stopinsert")
-							-- else
-							-- 	self.esc_timer:start(200, 0, function() end)
-							-- 	return "<esc>"
-							-- end
-							vim.cmd("stopinsert")
+							self.esc_timer = self.esc_timer or (vim.uv or vim.loop).new_timer()
+							if self.esc_timer:is_active() then
+								self.esc_timer:stop()
+								vim.cmd("stopinsert")
+								return "<BS>"
+							else
+								self.esc_timer:start(200, 0, function() end)
+								return "j"
+							end
+							-- vim.cmd("stopinsert")
 						end,
 						mode = "t",
 						expr = true,
@@ -154,7 +189,7 @@ return {
 			function()
 				Snacks.lazygit()
 			end,
-			desc = "Lazygit",
+			desc = "LazyGit",
 		},
 		{
 			"<leader>gl",
@@ -162,6 +197,13 @@ return {
 				Snacks.lazygit.log()
 			end,
 			desc = "Lazygit Log (cwd)",
+		},
+		{
+			"<leader>gL",
+			function()
+				Snacks.picker.git_log_line()
+			end,
+			desc = "Git log current line",
 		},
 		{
 			"<leader>hd",
@@ -213,7 +255,7 @@ return {
 					end
 				)
 			end,
-			desc = "Save ToDo list to file",
+			desc = "Save ToDo List to File",
 		},
 		{
 			"<leader>yl",
@@ -232,61 +274,110 @@ return {
 					end
 				end)
 			end,
-			desc = "Load ToDo list from file",
+			desc = "Load ToDo List from File",
+		},
+		-- {
+		-- 	"<leader>hn",
+		-- 	function()
+		-- 		Snacks.notifier.show_history()
+		-- 	end,
+		-- 	desc = "Notification History",
+		-- },
+		{
+			"<leader>hc",
+			function()
+				Snacks.picker.command_history()
+			end,
+			desc = "Commands History",
 		},
 		{
 			"<leader>hn",
-			function()
-				Snacks.notifier.show_history()
-			end,
+			":NoiceSnacks<CR>",
 			desc = "Notification History",
 		},
 		{
 			"<leader>ff",
 			function()
-				Snacks.picker.smart()
+				Snacks.picker.smart({
+					title = vim.fn.getcwd(),
+				})
 			end,
-			desc = "Find files in CWD",
+			desc = "Find Files in CWD",
+		},
+		{
+			"<leader>gc",
+			function()
+				Snacks.terminal.open("git show " .. vim.fn.expand("<cword>"), { win = { height = 0.8 } })
+			end,
+			desc = "Show git commit",
+		},
+		{
+			"<leader>fh",
+			function()
+				Snacks.picker.help()
+			end,
+			desc = "Help Pages",
+		},
+		{
+			"<leader>fm",
+			function()
+				Snacks.picker.man()
+			end,
+			desc = "Man Pages",
 		},
 		{
 			"<leader>fr",
 			function()
 				Snacks.picker.resume()
 			end,
-			desc = "Resume last search",
+			desc = "Resume Last Search",
 		},
 		{
 			"<leader>fl",
 			function()
 				Snacks.picker.lines()
 			end,
-			desc = "Find string in current buffer",
+			desc = "Find String in Current Buffer",
 		},
 		{
 			"<leader>fc",
 			function()
-				Snacks.picker.grep_word()
+				Snacks.picker.grep_word({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+				})
 			end,
-			desc = "Find string under cursor in cwd",
+			desc = "Find String under Cursor in CWD",
 		},
 		{
 			"<leader>fo",
 			function()
-				Snacks.picker.recent()
+				Snacks.picker.recent({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+				})
 			end,
 			desc = "Recent files",
 		},
 		{
 			"<leader>fs",
 			function()
-				Snacks.picker.grep()
+				Snacks.picker.grep({
+					title = vim.fn.getcwd(),
+				})
 			end,
-			desc = "Find string in cwd",
+			desc = "Find String in CWD",
 		},
 		{
 			"<leader>U",
 			function()
-				Snacks.picker.undo()
+				Snacks.picker.undo({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+				})
 			end,
 			desc = "Undo History",
 		},
@@ -295,7 +386,64 @@ return {
 			function()
 				ToggleQf()
 			end,
-			desc = "Toggle Quickfix list window",
+			desc = "Toggle Quickfix List Window",
+		},
+		{
+			"<leader>ld",
+			function()
+				Snacks.picker.lsp_definitions()
+			end,
+			desc = "Goto Definition",
+		},
+		{
+			"<leader>lr",
+			function()
+				Snacks.picker.lsp_references()
+			end,
+			nowait = true,
+			desc = "References",
+		},
+		{
+			"<leader>li",
+			function()
+				Snacks.picker.lsp_implementations()
+			end,
+			desc = "Goto Implementation",
+		},
+		{
+			"<leader>lt",
+			function()
+				Snacks.picker.lsp_type_definitions()
+			end,
+			desc = "Goto Type Definition",
+		},
+		{
+			"<leader>ls",
+			function()
+				Snacks.picker.lsp_symbols()
+			end,
+			desc = "LSP Symbols",
+		},
+		{
+			"<leader>W",
+			function()
+				Snacks.dashboard()
+			end,
+			desc = "Welcome Screen",
+		},
+		{
+			"<leader>lS",
+			function()
+				Snacks.picker.lsp_workspace_symbols()
+			end,
+			desc = "LSP Workspace Symbols",
+		},
+		{
+			"<leader>D",
+			function()
+				Snacks.picker.diagnostics_buffer()
+			end,
+			desc = "Diagnostics",
 		},
 	},
 }

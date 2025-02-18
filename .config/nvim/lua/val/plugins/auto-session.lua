@@ -12,8 +12,11 @@ return {
 
 		keymap.set("n", "<leader>wr", "<cmd>SessionRestore<CR>", { desc = "Restore session for cwd" }) -- restore last workspace session for current directory
 		keymap.set("n", "<leader>ws", "<cmd>SessionSave<CR>", { desc = "Save session for auto session root dir" }) -- save workspace session for current working directory
-		keymap.set("n", "<leader>wl", require("auto-session.session-lens").search_session, {
-			noremap = true,
-		})
+		keymap.set(
+			"n",
+			"<leader>wl",
+			require("auto-session.session-lens").search_session,
+			{ desc = "List all sessions", noremap = true }
+		)
 	end,
 }
