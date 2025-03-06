@@ -13,7 +13,8 @@ return {
 				html = { "prettier" },
 				json = { "prettier" },
 				yaml = { "prettier" },
-				markdown = { "prettier" },
+				markdown = { "mdformat" },
+				-- markdown = { "prettier" },
 				liquid = { "prettier" },
 				lua = { "stylua" },
 			},
@@ -21,6 +22,11 @@ return {
 				lsp_fallback = true,
 				async = false,
 				timeout_ms = 1000,
+			},
+			formatters = {
+				mdformat = {
+					prepend_args = { "--wrap", "100" },
+				},
 			},
 		})
 

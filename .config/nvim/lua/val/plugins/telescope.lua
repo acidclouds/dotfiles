@@ -68,6 +68,7 @@ return {
 						n = {
 							["<C-y>"] = copy_file_path,
 							["<C-o>"] = sudo_open,
+							["<BS>"] = require("telescope").extensions.file_browser.actions.goto_parent_dir,
 						},
 					},
 				},

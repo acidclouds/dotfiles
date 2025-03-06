@@ -6,6 +6,9 @@ return {
 		-- your configuration comes here
 		-- or leave it empty to use the default settings
 		-- refer to the configuration section below
+		scratch = {
+			ft = "markdown",
+		},
 		picker = {
 			win = {
 				input = {
@@ -80,7 +83,24 @@ return {
 				{ section = "startup" },
 			},
 		},
-		indent = { enabled = true, indent = { char = "┊" }, scope = { char = "┊" } },
+		indent = {
+			enabled = true,
+			indent = {
+				char = "┊",
+				hl = {
+					"NeoTreeIndentMarker",
+					-- "SnacksIndent1",
+					-- "SnacksIndent2",
+					-- "SnacksIndent3",
+					-- "SnacksIndent4",
+					-- "SnacksIndent5",
+					-- "SnacksIndent6",
+					-- "SnacksIndent7",
+					-- "SnacksIndent8",
+				},
+			},
+			scope = { char = "┊" },
+		},
 		input = { enabled = true },
 		notifier = { enabled = true },
 		quickfile = { enabled = true },
@@ -156,7 +176,7 @@ return {
 						end,
 						mode = "t",
 						expr = true,
-						desc = "Double escape to normal mode",
+						desc = "Double j to normal mode",
 					},
 				},
 			},
@@ -176,6 +196,25 @@ return {
 				Snacks.scratch()
 			end,
 			desc = "Toggle Scratch Buffer",
+		},
+		{
+			"<leader>f.",
+			function()
+				Snacks.scratch.select()
+			end,
+			desc = "Select Scratch Buffers",
+		},
+		{
+			"<leader>fk",
+			function()
+				Snacks.picker.keymaps()
+			end,
+			desc = "Keymaps",
+		},
+		{
+			"<leader>fv",
+			":Telescope vim_options<CR>",
+			desc = "VIM options",
 		},
 		{
 			"<leader>bd",

@@ -56,12 +56,18 @@ augroup END]],
 	false
 )
 
+vim.api.nvim_create_autocmd({ "QuitPre" }, {
+	callback = function(context)
+		Snacks.bufdelete.all()
+	end,
+})
+
 local keymap = vim.keymap -- for conciseness
 -- local wk = require("which-key")
 -- -- General Keymaps -------------------
 
 -- use jk to exit insert mode
-keymap.set("n", "<leader>Q", "<cmd>qa!<CR>", { desc = "Quit all force" })
+keymap.set("n", "<leader>Q", "<cmd>qa<CR>", { desc = "Quit all" })
 -- clear search highlights
 keymap.set("n", "<leader>hx", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set("n", "<leader>|", "<C-w>v", { desc = "Split vertical" })

@@ -16,11 +16,11 @@ return {
 			ensure_installed = {
 				"html",
 				"lua_ls",
-				"pyright",
-				"ts_ls",
+				-- "pyright",
+				-- "ts_ls",
 				"gopls",
-				"java_language_server",
-				"csharp_ls",
+				-- "java_language_server",
+				-- "csharp_ls",
 			},
 		})
 		mason_tool_installer.setup({
@@ -29,7 +29,7 @@ return {
 				"stylua", -- lua formatter
 				"eslint_d",
 				"golangci-lint",
-				"google-java-format",
+				-- "google-java-format",
 				"gofumpt",
 			},
 		})

@@ -43,12 +43,13 @@ return {
 					local macchiato = require("catppuccin.palettes").get_palette("macchiato")
 					local mocha = require("catppuccin.palettes").get_palette("mocha")
 					return {
-						LineNr = { fg = macchiato.overlay1 },
-						CursorLineNr = { fg = colors.peach },
-						CursorLine = { bg = mocha.surface0 },
+						LineNr = { fg = "#6C7086" },
+						-- LineNr = { fg = macchiato.overlay1 },
+						CursorLineNr = { fg = colors.mauve },
+						-- CursorLine = { bg = mocha.surface0 },
 					}
 				end,
-				--      custom_highlights = {},
+				-- custom_highlights = {},
 				default_integrations = true,
 				integrations = {
 					cmp = true,

@@ -128,6 +128,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
+export LC_COLLATE=C
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -180,11 +181,16 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin"
 # export PATH="$PATH:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
 alias nv="nvim"
+alias lg="lazygit"
 
 eval "$(thefuck --alias fk)"
 
 function sfg() {
   rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --ansi --no-sort --preview-window 'down:+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
+}
+
+function go_test() {
+  go test './'$1 -list . | sed -e '$ d' | fzf --cycle -m --bind ctrl-o:select-all | sed -z 's/\n/|/g;s/|$/\n/' | xargs -i go test $2 './'$1 -run '('{}')' 
 }
 
  # disable sort when completing `git checkout`
