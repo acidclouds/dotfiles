@@ -1,5 +1,5 @@
 return {
-	"folke/snacks.nvim",
+	"acidclouds/snacks.nvim",
 	priority = 1000,
 	lazy = false,
 	opts = {
@@ -193,9 +193,9 @@ return {
 		{
 			"<leader>.",
 			function()
-				Snacks.scratch()
+				Snacks.picker.scratch()
 			end,
-			desc = "Toggle Scratch Buffer",
+			desc = "Open scratchpad",
 		},
 		{
 			"<leader>f.",
