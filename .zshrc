@@ -182,6 +182,7 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
 alias nv="nvim"
 alias lg="lazygit"
+alias lzd="sudo /home/val/.local/bin/lazydocker"
 
 eval "$(thefuck --alias fk)"
 

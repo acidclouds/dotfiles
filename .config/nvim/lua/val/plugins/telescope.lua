@@ -27,10 +27,14 @@ return {
 			print(entry.path)
 			vim.api.nvim_command("e! " .. vim.fn.fnameescape("suda://" .. entry.path))
 		end
+		local screen_layout = "vertical"
+		if vim.o.columns >= 120 then
+			screen_layout = "horizontal"
+		end
 
 		telescope.setup({
 			defaults = {
-				layout_strategy = "vertical",
+				layout_strategy = screen_layout,
 				sorting_strategy = "ascending",
 				layout_config = { height = 0.9 },
 				path_display = { "smart" },
