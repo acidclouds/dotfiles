@@ -1,11 +1,13 @@
 local colors = require("catppuccin.palettes.mocha")
 return {
 	"nvim-lualine/lualine.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	-- dependencies = { "nvim-tree/nvim-web-devicons" },
+	dependencies = { "echasnovski/mini.icons" },
 	config = function()
 		local lualine = require("lualine")
 		local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 		local mocha = require("catppuccin.palettes").get_palette("mocha")
+		require("mini.icons").setup()
 
 		-- configure lualine with modified theme
 		lualine.setup({
