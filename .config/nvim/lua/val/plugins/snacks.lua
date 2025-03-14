@@ -43,12 +43,12 @@ return {
 			-- your terminal configuration comes here
 			-- or leave it empty to use the default settings
 			-- refer to the configuration section below
-			-- win = { style = "terminal" },
-			win = {
-				-- position = "float",
-				style = "terminal",
-				border = "rounded",
-			},
+			win = { style = "terminal" },
+			-- win = {
+			-- 	-- position = "float",
+			-- 	style = "terminal",
+			-- 	border = "rounded",
+			-- },
 			enabled = true,
 		},
 		bigfile = { enabled = true },
@@ -145,7 +145,7 @@ return {
 				bo = {
 					filetype = "snacks_terminal",
 				},
-				height = 0.2,
+				height = 0.25,
 				wo = {},
 				keys = {
 					q = "hide",
@@ -154,7 +154,7 @@ return {
 						if f == "" then
 							Snacks.notify.warn("No file under cursor")
 						else
-							self:hide()
+							-- self:hide()
 							vim.schedule(function()
 								vim.cmd("e " .. f)
 							end)
