@@ -31,6 +31,10 @@ function LoadClist(filename)
 	vim.cmd.copen()
 end
 
+function GetVisualSelection()
+	return vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"), { type = vim.fn.mode() })
+end
+
 function ToggleQf()
 	local qf_exists = false
 	for _, win in pairs(vim.fn.getwininfo()) do

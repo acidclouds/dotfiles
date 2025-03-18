@@ -259,6 +259,27 @@ return {
 			desc = "Toggle Terminal",
 		},
 		{
+			"<leader>x",
+			function()
+				local window = Snacks.terminal.get(nil, { start_insert = false, win = { enter = false } })
+				vim.fn.chansend(vim.bo[window.buf].channel, vim.api.nvim_get_current_line() .. "\n")
+			end,
+			desc = "Execute current line in terminal",
+			mode = { "n" },
+		},
+		{
+			"<leader>x",
+			function()
+				local visual_selection = GetVisualSelection()
+				local window = Snacks.terminal.get(nil, { start_insert = false, win = { enter = false } })
+				for _, ln in ipairs(visual_selection) do
+					vim.fn.chansend(vim.bo[window.buf].channel, ln .. "\n")
+				end
+			end,
+			desc = "Execute selection in terminal",
+			mode = { "v" },
+		},
+		{
 			"]]",
 			function()
 				Snacks.words.jump(vim.v.count1)
@@ -315,13 +336,6 @@ return {
 			end,
 			desc = "Load ToDo List from File",
 		},
-		-- {
-		-- 	"<leader>hn",
-		-- 	function()
-		-- 		Snacks.notifier.show_history()
-		-- 	end,
-		-- 	desc = "Notification History",
-		-- },
 		{
 			"<leader>hc",
 			function()
@@ -340,6 +354,7 @@ return {
 			"<leader>ff",
 			function()
 				Snacks.picker.smart({
+					hidden = true,
 					title = vim.fn.getcwd(),
 				})
 			end,
@@ -406,6 +421,7 @@ return {
 			"<leader>fs",
 			function()
 				Snacks.picker.grep({
+					hidden = true,
 					title = vim.fn.getcwd(),
 				})
 			end,
