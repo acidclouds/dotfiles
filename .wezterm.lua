@@ -5,6 +5,13 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
+config.keys = {
+	{
+		key = "n",
+		mods = "SHIFT|CTRL",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
+}
 
 -- For example, changing the color scheme:
 config.color_scheme = "Catppuccin Mocha"

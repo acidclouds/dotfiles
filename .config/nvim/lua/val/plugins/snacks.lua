@@ -191,18 +191,44 @@ return {
 	},
 	keys = {
 		{
-			"<leader>.",
-			function()
-				Snacks.picker.scratch()
-			end,
-			desc = "Open scratchpad",
-		},
-		{
 			"<leader>f.",
 			function()
-				Snacks.scratch.select()
+				Snacks.picker.scratch({
+					on_show = function()
+						vim.cmd.stopinsert()
+					end,
+					win = {
+						input = {
+							keys = {
+								["<c-n>"] = {
+									function(picker)
+										picker:close()
+										Snacks.input.input({
+											prompt = "Name your new scratchpad (cancelling will open default)",
+											default = "",
+										}, function(response)
+											if response then
+												Snacks.scratch.open({ name = response })
+											else
+												Snacks.scratch.open()
+											end
+										end)
+									end,
+									mode = { "n", "i" },
+								},
+							},
+						},
+					},
+				})
 			end,
 			desc = "Select Scratch Buffers",
+		},
+		{
+			"<leader>.",
+			function()
+				Snacks.scratch()
+			end,
+			desc = "Open scratchpad",
 		},
 		{
 			"<leader>fk",
