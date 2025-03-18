@@ -178,6 +178,7 @@ alias lst="eza -l -a --group-directories-first --total-size --icons=always"
 alias cat="batcat --paging=never"
 eval "$(zoxide init zsh)"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin"
+export RIPGREP_CONFIG_PATH="$HOME/.config/.ripgrep.rc" 
 # export PATH="$PATH:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
 alias nv="nvim"

@@ -355,6 +355,7 @@ return {
 			function()
 				Snacks.picker.smart({
 					hidden = true,
+					ignored = true,
 					title = vim.fn.getcwd(),
 				})
 			end,
@@ -422,6 +423,7 @@ return {
 			function()
 				Snacks.picker.grep({
 					hidden = true,
+					ignored = true,
 					title = vim.fn.getcwd(),
 				})
 			end,
