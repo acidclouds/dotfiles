@@ -128,6 +128,8 @@ return {
 		styles = {
 			lazygit = {
 				height = 0.8,
+				width = 0.95,
+				border = "rounded",
 			},
 			notification = {
 				wo = {
@@ -524,7 +526,7 @@ return {
 			desc = "LSP Workspace Symbols",
 		},
 		{
-			"<leader>D",
+			"<leader>fd",
 			function()
 				Snacks.picker.diagnostics_buffer()
 			end,

@@ -19,6 +19,7 @@ return {
 				-- "pyright",
 				-- "ts_ls",
 				"gopls",
+				"clangd",
 				-- "java_language_server",
 				-- "csharp_ls",
 			},

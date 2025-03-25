@@ -69,7 +69,7 @@ return {
 				-- keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
 				opts.desc = "Show line diagnostics"
-				keymap.set("n", "<leader>d", function()
+				keymap.set("n", "<leader>D", function()
 					vim.diagnostic.open_float({ border = "rounded" })
 				end, opts) -- show diagnostics for line
 
