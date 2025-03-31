@@ -428,6 +428,9 @@ return {
 			"<leader>fc",
 			function()
 				Snacks.picker.grep_word({
+					hidden = true,
+					ignored = true,
+					title = vim.fn.getcwd(),
 					on_show = function()
 						vim.cmd.stopinsert()
 					end,
