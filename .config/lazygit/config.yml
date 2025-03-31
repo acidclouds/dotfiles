@@ -1,6 +1,7 @@
 gui:
+  switchTabsWithPanelJumpKeys: true
+  nerdFontsVersion: "3"
   theme:
-    nerdFontsVersion: "3"
     activeBorderColor:
       - "#fab387"
       - bold
