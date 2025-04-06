@@ -83,6 +83,7 @@ return {
 				{ section = "startup" },
 			},
 		},
+		image = { enabled = true },
 		indent = {
 			enabled = true,
 			indent = {
