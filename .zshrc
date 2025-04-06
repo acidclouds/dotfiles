@@ -189,7 +189,7 @@ alias docker="sudo docker"
 eval "$(thefuck --alias fk)"
 
 function sfg() {
-  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --preview-window 'down:+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
+  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --preview-window 'right,border-rounded,<60(down,50%,border-rounded):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
 }
 
 function go_test() {
@@ -216,8 +216,8 @@ zstyle ':fzf-tab:*' fzf-min-height 20
 # zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
 zstyle ':fzf-tab:complete:*:options' fzf-preview
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l -a --group-directories-first --color=always --icons=always $realpath'
-zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window=down --height=50% 
-zstyle ':fzf-tab:complete:*:*' fzf-flags --preview-window=down --height=50% 
+zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window 'right,border-rounded,<60(down,50%,border-rounded)'
+zstyle ':fzf-tab:complete:*:*' fzf-flags --preview-window 'right,border-rounded,<60(down,50%,border-rounded)'
 
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
 export LESSOPEN='| ~/.config/.lessfilter "%s"'
