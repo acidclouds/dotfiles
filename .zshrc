@@ -162,8 +162,8 @@ function my_init() {
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 }
 
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-autoload -U compinit; compinit
+# fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+# autoload -U compinit; compinit
 
 setopt share_history
 setopt hist_expire_dups_first
@@ -189,11 +189,20 @@ alias docker="sudo docker"
 eval "$(thefuck --alias fk)"
 
 function sfg() {
-  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --preview-window 'right,border-rounded,<60(down,50%,border-rounded):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
+  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'rounded' --preview-window 'right,border-rounded,<60(down,50%,border-rounded):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
 }
 
 function go_test() {
   go test './'$1 -list . | sed -e '$ d' | fzf --cycle -m --bind ctrl-o:select-all | sed -z 's/\n/|/g;s/|$/\n/' | xargs -i go test $2 './'$1 -run '('{}')' 
+}
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }
 
  # disable sort when completing `git checkout`
@@ -214,10 +223,14 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:*' fzf-min-height 20
 # zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
-zstyle ':fzf-tab:complete:*:options' fzf-preview
+# zstyle ':fzf-tab:complete:*:options' fzf-preview
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l -a --group-directories-first --color=always --icons=always $realpath'
-zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window 'right,border-rounded,<60(down,50%,border-rounded)'
-zstyle ':fzf-tab:complete:*:*' fzf-flags --preview-window 'right,border-rounded,<60(down,50%,border-rounded)'
+zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window 'right,border-rounded,<100(down,50%,border-rounded)' --border 'rounded'
+zstyle ':fzf-tab:complete:*:*' fzf-flags --preview-window 'right,border-rounded,<100(down,50%,border-rounded)' --border 'rounded'
+# zstyle ':fzf-tab:complete:cd:*' fzf-flags --border 'rounded'
+# zstyle ':fzf-tab:complete:*:*' fzf-flags --border 'rounded'
+
+
 
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
 export LESSOPEN='| ~/.config/.lessfilter "%s"'
@@ -233,6 +246,7 @@ zstyle ':fzf-tab:*' fzf-bindings 'tab:accept' 'ctrl-w:toggle-preview-wrap' 'ctrl
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
 export LS_COLORS="$(vivid generate catppuccin-mocha)"
+export EDITOR=nvim
 
 eval "$(starship init zsh)"
 
