@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# /home/val/.tmux/plugins/tmux-weather/scripts
+
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$CURRENT_DIR/helpers.sh"
 
