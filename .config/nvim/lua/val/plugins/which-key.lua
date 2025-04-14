@@ -13,6 +13,7 @@ return {
 			{ "X", '"_X', mode = "n", hidden = true },
 			{ "c", '"_c', mode = "n", hidden = true },
 			{ "C", '"_C', mode = "n", hidden = true },
+			{ "p", "P", mode = { "n", "v", "x" }, hidden = true },
 			{ "<c-h>", "<cmd>TmuxNavigateLeft<cr>", hidden = true },
 			{ "<c-j>", "<cmd>TmuxNavigateDown<cr>", mode = { "n", "v" }, hidden = true },
 			{ "<c-k>", "<cmd>TmuxNavigateUp<cr>", mode = { "n", "v" }, hidden = true },

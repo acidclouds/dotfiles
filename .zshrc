@@ -72,7 +72,8 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 
 # autoload -Uz compinit; compinit
-
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 # ZVM_INIT_MODE=sourcing
 plugins=(
   git
@@ -82,6 +83,20 @@ plugins=(
   zsh-syntax-highlighting
   ohmyzsh-full-autoupdate
 )
+
+export FZF_DEFAULT_OPTS=" \
+--border=bold \
+--input-border=bold \
+--list-border=bold \
+--preview-border=bold \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f5c2e7 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f5c2e7 \
+--color=selected-bg:#45475a \
+--color=preview-border:#89b4fa \
+--color=input-border:#cba6f7 \
+--color=list-border:#f5c2e7 \
+--color=border:#313244,label:#cdd6f4"
 
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else batcat -n --color=always {}; fi"
 #
@@ -109,9 +124,14 @@ show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head
 # FD_OPTS="--hidden --follow --exclude .git"
 # export FZF_CTRL_T_COMMAND="fd --type f $FD_OPTS"
 # export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS"
-export FZF_DEFAULT_COMMAND="fd --type f --hidden --exclude .git"
+export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --exclude .git"
 # export FZF_DEFAULT_OPTIONS="--preview-window down --height 50%"
 export FZF_CTRL_R_OPTS="
+  --style full
+  --border bold 
+  --input-border bold 
+  --list-border bold 
+  --preview-border bold 
   --preview 'echo {2..} | batcat --color=always -pl sh'
   --preview-window up:3:wrap
   --color header:italic"
@@ -185,11 +205,12 @@ alias nv="nvim"
 alias lg="lazygit"
 alias lzd="sudo /home/val/.local/bin/lazydocker"
 alias docker="sudo docker"
+alias fd="fdfind"
 
 eval "$(thefuck --alias fk)"
 
 function sfg() {
-  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'rounded' --preview-window 'right,border-rounded,<60(down,50%,border-rounded):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
+  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'bold' --preview-border 'bold' --input-border 'bold' --list-border 'bold' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
 }
 
 function go_test() {
@@ -207,7 +228,7 @@ function y() {
 
  # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
-zstyle ':fzf-tab:*' use-fzf-default-opts no
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # set descriptions format to enable group support
 # NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
 zstyle ':completion:*:descriptions' format '[%d]'
@@ -225,8 +246,8 @@ zstyle ':fzf-tab:*' fzf-min-height 20
 # zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
 # zstyle ':fzf-tab:complete:*:options' fzf-preview
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l -a --group-directories-first --color=always --icons=always $realpath'
-zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window 'right,border-rounded,<100(down,50%,border-rounded)' --border 'rounded'
-zstyle ':fzf-tab:complete:*:*' fzf-flags --preview-window 'right,border-rounded,<100(down,50%,border-rounded)' --border 'rounded'
+zstyle ':fzf-tab:complete:cd:*' fzf-flags --style 'full' --preview-window 'right,border-bold,<100(down,border-bold,50%)' --border 'bold' --preview-border 'bold' --input-border 'bold' --list-border 'bold'
+zstyle ':fzf-tab:complete:*:*' fzf-flags --style 'full' --preview-window 'right,border-bold,<100(down,border-bold,50%)' --border 'bold' --preview-border 'bold' --input-border 'bold' --list-border 'bold'
 # zstyle ':fzf-tab:complete:cd:*' fzf-flags --border 'rounded'
 # zstyle ':fzf-tab:complete:*:*' fzf-flags --border 'rounded'
 
