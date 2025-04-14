@@ -85,10 +85,10 @@ plugins=(
 )
 
 export FZF_DEFAULT_OPTS=" \
---border=bold \
---input-border=bold \
---list-border=bold \
---preview-border=bold \
+--border=rounded \
+--input-border=rounded \
+--list-border=rounded \
+--preview-border=rounded \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f5c2e7 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f5c2e7 \
@@ -128,10 +128,10 @@ export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --exclude .git"
 # export FZF_DEFAULT_OPTIONS="--preview-window down --height 50%"
 export FZF_CTRL_R_OPTS="
   --style full
-  --border bold 
-  --input-border bold 
-  --list-border bold 
-  --preview-border bold 
+  --border rounded 
+  --input-border rounded 
+  --list-border rounded 
+  --preview-border rounded 
   --preview 'echo {2..} | batcat --color=always -pl sh'
   --preview-window up:3:wrap
   --color header:italic"
@@ -210,7 +210,7 @@ alias fd="fdfind"
 eval "$(thefuck --alias fk)"
 
 function sfg() {
-  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'bold' --preview-border 'bold' --input-border 'bold' --list-border 'bold' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
+  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
 }
 
 function go_test() {
@@ -246,8 +246,8 @@ zstyle ':fzf-tab:*' fzf-min-height 20
 # zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
 # zstyle ':fzf-tab:complete:*:options' fzf-preview
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l -a --group-directories-first --color=always --icons=always $realpath'
-zstyle ':fzf-tab:complete:cd:*' fzf-flags --style 'full' --preview-window 'right,border-bold,<100(down,border-bold,50%)' --border 'bold' --preview-border 'bold' --input-border 'bold' --list-border 'bold'
-zstyle ':fzf-tab:complete:*:*' fzf-flags --style 'full' --preview-window 'right,border-bold,<100(down,border-bold,50%)' --border 'bold' --preview-border 'bold' --input-border 'bold' --list-border 'bold'
+zstyle ':fzf-tab:complete:cd:*' fzf-flags --style 'full' --preview-window 'right,border-rounded,<100(down,border-rounded,50%)' --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded'
+zstyle ':fzf-tab:complete:*:*' fzf-flags --style 'full' --preview-window 'right,border-rounded,<100(down,border-rounded,50%)' --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded'
 # zstyle ':fzf-tab:complete:cd:*' fzf-flags --border 'rounded'
 # zstyle ':fzf-tab:complete:*:*' fzf-flags --border 'rounded'
 
