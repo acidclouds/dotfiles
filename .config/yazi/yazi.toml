@@ -1,4 +1,5 @@
 [manager]
+ratio = [0, 3, 5]
 show_hidden = true
 
 [plugin]

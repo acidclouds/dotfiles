@@ -14,11 +14,6 @@ run = "plugin toggle-pane min-preview"
 desc = "Toggle the preview pane"
 
 [[manager.prepend_keymap]]
-on   = "f"
-run  = "plugin jump-to-char"
-desc = "Jump to char"
-
-[[manager.prepend_keymap]]
 on   = "F"
 run  = "filter --smart"
 desc = "Filter"
@@ -27,7 +22,6 @@ desc = "Filter"
 on = "l"
 run = "plugin augment-command -- enter"
 desc = "Enter a directory and skip directories with only a single subdirectory"
-
 
 [[manager.prepend_keymap]]
 on = "<RIGHT>"
@@ -42,5 +36,20 @@ desc = "Enter a directory and skip directories with only a single subdirectory"
 [[manager.prepend_keymap]]
 on = "o"
 run = "disable"
+desc = ""
+
+[[input.prepend_keymap]]
+on   = "<Up>"
+run  = "mgr:arrow prev"
+desc = ""
+
+[[input.prepend_keymap]]
+on   = "<Down>"
+run  = "mgr:arrow next"
+desc = ""
+
+[[input.prepend_keymap]]
+on   = "<Right>"
+run  = ["input:close", "mgr:plugin augment-command -- enter"]
 desc = ""
 
