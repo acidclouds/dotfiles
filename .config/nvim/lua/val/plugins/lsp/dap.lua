@@ -1,6 +1,26 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
+		config = function()
+			local dap = require("dap")
+			dap.adapters.gdb = {
+				type = "executable",
+				command = "gdb",
+				args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+			}
+			dap.configurations.c = {
+				{
+					name = "Attach to gdbserver :1234",
+					type = "gdb",
+					request = "attach",
+					target = "localhost:1234",
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+					end,
+					cwd = "${workspaceFolder}",
+				},
+			}
+		end,
 		keys = {
 			{ "<leader>dt", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = "Toggle Breakpoint" },
 			{ "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", desc = "Continue" },
@@ -32,12 +52,12 @@ return {
 			end
 		end,
 		keys = {
-			-- {
-			-- 	"<leader>dv",
-			-- 	"<cmd>lua local widgets=require'dap.ui.widgets'; widgets.centered_float(widgets.scopes)<CR>",
-			-- 	desc = "Variables",
-			-- },
-			-- { "<leader>dx", "<cmd>lua require'dap.ui.widgets'.hover()<cr>", desc = "Examine" },
+			{
+				"<leader>dv",
+				"<cmd>lua local widgets=require'dap.ui.widgets'; widgets.centered_float(widgets.scopes)<CR>",
+				desc = "Variables",
+			},
+			{ "<leader>dx", "<cmd>lua require'dap.ui.widgets'.hover()<cr>", desc = "Examine" },
 			{ "<leader>dU", "<cmd>lua require'dapui'.toggle()<cr>", desc = "Toggle UI" },
 		},
 	},
@@ -51,7 +71,7 @@ return {
 			require("mason-nvim-dap").setup({
 				ensure_installed = {
 					-- "python",   -- debugpy
-					"delve", -- golang
+					-- "delve", -- golang
 					-- "codelldb", -- rust, c, c++
 				},
 			})
@@ -59,7 +79,8 @@ return {
 	},
 	{
 		"leoluz/nvim-dap-go",
-		dpendencies = { "mfussenegger/nvim-dap" },
+		dependencies = { "mfussenegger/nvim-dap" },
+		enabled = false,
 		config = function()
 			require("dap-go").setup()
 		end,
