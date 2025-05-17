@@ -18,11 +18,19 @@ return {
 				liquid = { "prettier" },
 				lua = { "stylua" },
 			},
-			format_on_save = {
-				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
-			},
+			format_on_save = function(bufnr)
+				-- Disable with a global or buffer-local variable
+				-- Toggles for those are in snacks.lua
+				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+					return
+				end
+				return { timeout_ms = 500, lsp_fallback = true }
+			end,
+			-- format_on_save = {
+			-- 	lsp_fallback = true,
+			-- 	async = false,
+			-- 	timeout_ms = 1000,
+			-- },
 			formatters = {
 				mdformat = {
 					prepend_args = { "--wrap", "90" },

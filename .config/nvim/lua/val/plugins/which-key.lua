@@ -46,6 +46,11 @@ return {
 			{ "<leader>s", group = "Split" },
 			{ "<leader>h", group = "Highlights" },
 			{ "<leader>y", group = "Quickfix" },
+			{ "<leader>u", group = "Toggle" },
+			{ "<leader>d", group = "Debugger" },
+			{ "<leader>w", group = "Session" },
+			{ "<leader>t", group = "Tab" },
+			{ "<leader>b", group = "Buffer" },
 		},
 		-- your configuration comes here
 		-- or leave it empty to use the default settings

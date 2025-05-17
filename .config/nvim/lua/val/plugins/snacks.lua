@@ -63,11 +63,11 @@ return {
 					width = 61,
 					-- align = "right",
 				},
-				{ pane = 2, section = "keys", gap = 1, padding = 1 },
-				{ pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-				{ pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+				{ pane = 1, section = "keys", gap = 1, padding = 1 },
+				{ pane = 1, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+				{ pane = 1, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
 				{
-					pane = 2,
+					pane = 1,
 					icon = " ",
 					title = "Git Status",
 					section = "terminal",
@@ -536,5 +536,56 @@ return {
 			end,
 			desc = "Diagnostics",
 		},
+		{
+			"<leader>um",
+			function()
+				require("render-markdown").toggle()
+			end,
+			desc = "Toggle Render Markdown",
+		},
 	},
+	init = function()
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "VeryLazy",
+			callback = function()
+				-- Setup some globals for debugging (lazy-loaded)
+				_G.dd = function(...)
+					Snacks.debug.inspect(...)
+				end
+				_G.bt = function()
+					Snacks.debug.backtrace()
+				end
+				vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+				-- Create some toggle mappings
+				Snacks.toggle.animate():map("<leader>ua")
+				Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+				Snacks.toggle.option("list", { name = "󱁐 List (Visible Whitespace)" }):map("<leader>ul")
+				Snacks.toggle
+					.new({
+						id = "format_on_save",
+						name = "󰊄 Format on Save (global)",
+						get = function()
+							return not vim.g.disable_autoformat
+						end,
+						set = function(state)
+							vim.g.disable_autoformat = not state
+						end,
+					})
+					:map("<leader>uf")
+				Snacks.toggle
+					.new({
+						id = "format_on_save_buffer",
+						name = "󰊄 Format on Save (buffer)",
+						get = function()
+							return not vim.b.disable_autoformat
+						end,
+						set = function(state)
+							vim.b.disable_autoformat = not state
+						end,
+					})
+					:map("<leader>uF")
+			end,
+		})
+	end,
 }
