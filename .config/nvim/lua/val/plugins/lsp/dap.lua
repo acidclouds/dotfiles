@@ -1,6 +1,7 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
+		enabled = true,
 		config = function()
 			local dap = require("dap")
 			dap.adapters.gdb = {
@@ -35,6 +36,7 @@ return {
 	},
 	{
 		"rcarriga/nvim-dap-ui",
+		enabled = false,
 		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
 		config = function()
 			local dap = require("dap")
@@ -63,8 +65,9 @@ return {
 	},
 	{
 		"jay-babu/mason-nvim-dap.nvim",
+		enabled = false,
 		dependencies = {
-			"williamboman/mason.nvim",
+			"mason-org/mason.nvim",
 			"mfussenegger/nvim-dap",
 		},
 		config = function()
@@ -79,6 +82,7 @@ return {
 	},
 	{
 		"leoluz/nvim-dap-go",
+		enabled = false,
 		dependencies = { "mfussenegger/nvim-dap" },
 		enabled = false,
 		config = function()
@@ -87,6 +91,7 @@ return {
 	},
 	{
 		"theHamsta/nvim-dap-virtual-text",
+		enabled = false,
 		dependencies = {
 			"mfussenegger/nvim-dap",
 			"nvim-treesitter/nvim-treesitter",

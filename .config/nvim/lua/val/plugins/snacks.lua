@@ -7,7 +7,7 @@ return {
 		-- or leave it empty to use the default settings
 		-- refer to the configuration section below
 		scratch = {
-			ft = "markdown",
+			ft = "text",
 		},
 		picker = {
 			win = {
@@ -106,7 +106,7 @@ return {
 		notifier = { enabled = true },
 		quickfile = { enabled = true },
 		-- statuscolumn = { enabled = true },
-		explorer = { enabled = true },
+		explorer = { enabled = false },
 		toggle = {
 			enabled = true,
 			map = vim.keymap.set, -- keymap.set function to use
@@ -487,6 +487,13 @@ return {
 			desc = "Goto Definition",
 		},
 		{
+			"<leader>lD",
+			function()
+				Snacks.picker.lsp_declarations()
+			end,
+			desc = "Goto Declaration",
+		},
+		{
 			"<leader>lr",
 			function()
 				Snacks.picker.lsp_references()
@@ -500,6 +507,34 @@ return {
 				Snacks.picker.lsp_implementations()
 			end,
 			desc = "Goto Implementation",
+		},
+		{
+			"<leader>la",
+			function()
+				vim.lsp.buf.code_action()
+			end,
+			desc = "See available code actions",
+		},
+		{
+			"<leader>D",
+			function()
+				vim.diagnostic.open_float({ border = "rounded" })
+			end,
+			desc = "Show line diagnostics",
+		},
+		{
+			"<leader>cr",
+			function()
+				vim.lsp.buf.rename()
+			end,
+			desc = "Smart Rename",
+		},
+		{
+			"D",
+			function()
+				vim.lsp.buf.hover()
+			end,
+			desc = "Show documentation for what is under cursor",
 		},
 		{
 			"<leader>lt",

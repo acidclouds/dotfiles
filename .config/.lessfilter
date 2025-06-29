@@ -6,6 +6,7 @@ kind=${mime##*/}
 if [ -d "$1" ]; then
 	eza -l -a --group-directories-first --color=always --icons=always "$1"
 elif [ "$category" = image ]; then
+  # wezterm imgcat "$1"
 	chafa "$1"
 	exiftool "$1"
 elif [ "$kind" = pdf ]; then
