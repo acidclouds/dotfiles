@@ -173,8 +173,8 @@ export LC_COLLATE=C
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
+SAVEHIST=10000
+HISTSIZE=9999
 
 # zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 function my_init() {

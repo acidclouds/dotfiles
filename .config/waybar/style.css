@@ -151,6 +151,10 @@
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+#language {
+  min-width: 7px;
+}
+
 #custom-notification:hover,
 #language:hover,
 #bluetooth:hover,
