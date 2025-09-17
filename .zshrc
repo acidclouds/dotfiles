@@ -98,7 +98,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=list-border:#f5c2e7 \
 --color=border:#313244,label:#cdd6f4"
 
-show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else batcat -n --color=always {}; fi"
+show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always {}; fi"
 #
  # export FZF_CTRL_T_OPTS="--preview-window 'down:+{2}-5' --preview '$show_file_or_dir_preview'"
  # export FZF_ALT_C_OPTS="--preview-window 'down:+{2}-5' --preview 'eza --tree --color=always {} | head -200'"
@@ -132,7 +132,7 @@ export FZF_CTRL_R_OPTS="
   --input-border rounded 
   --list-border rounded 
   --preview-border rounded 
-  --preview 'echo {2..} | batcat --color=always -pl sh'
+  --preview 'echo {2..} | bat --color=always -pl sh'
   --preview-window up:3:wrap
   --color header:italic"
 
@@ -195,7 +195,7 @@ source $ZSH/oh-my-zsh.sh
 export BAT_THEME=Coldark-Dark
 alias ls="eza -l -a --group-directories-first --icons=always"
 alias lst="eza -l -a --group-directories-first --total-size --icons=always"
-alias cat="batcat --paging=never"
+alias cat="bat --paging=never"
 eval "$(zoxide init zsh)"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin"
 export RIPGREP_CONFIG_PATH="$HOME/.config/.ripgrep.rc" 
@@ -207,10 +207,10 @@ alias lzd="sudo /home/val/.local/bin/lazydocker"
 alias docker="sudo docker"
 alias fd="fdfind"
 
-eval "$(thefuck --alias fk)"
+# eval "$(thefuck --alias fk)"
 
 function sfg() {
-  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
+  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}'
 }
 
 function go_test() {
@@ -269,6 +269,9 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 export LS_COLORS="$(vivid generate catppuccin-mocha)"
 export EDITOR=nvim
 
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
+
 eval "$(starship init zsh)"
 
   # autoload -U compinit; compinit
@@ -280,8 +283,8 @@ eval "$(starship init zsh)"
 
   # autoload -U compinit; compinit
 
-if ! [[ -v TMUX ]]; then
- 	tmux new-session -A -s val
-fi
+# if ! [[ -v TMUX ]]; then
+#  	tmux new-session -A -s val
+# fi
 
 

@@ -1,0 +1,6 @@
+[default]
+duration = "60m"
+mode = "center"
+path = "/home/val/.config/wallpapers/"
+sorting = "random"
+group = 1
