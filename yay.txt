@@ -8,6 +8,8 @@ yay -S font-config-info
 yay -S ttf-nerd-fonts-variants
 yay -S ttf-nerd-fonts-symbols-mono
 yay -S ttf-noto-nerd
+yay -S noto-fonts
+yay -S ttf-firacode-nerd
 yay -S ttf-adwaita-nerd
 yay -S ttf-adwaita-mono-nerd
 yay -S noto-color-emoji-fontconfig
@@ -15,8 +17,6 @@ yay -S telegram-desktop
 yay -S whiskers
 yay -S network-manager-applet
 yay -S gnome-font-viewer
-yay -S powerkit
-yay -S power-options-gtk
 yay -S nerd-fonts-meslo
 yay -S ttf-jetbrains-mono-nerd 
 yay -S wpaperd-git

@@ -52,3 +52,4 @@ sudo pacman -S xdg-desktop-portal-hyprland
 sudo pacman -S wireplumber
 sudo pacman -S pipewire
 sudo pacman -S pipewire-pulse
+sudo pacman -S power-profiles-daemon

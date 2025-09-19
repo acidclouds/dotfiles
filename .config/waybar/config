@@ -15,6 +15,7 @@
     "hyprland/language",
     "pulseaudio",
     "backlight",
+    "power-profiles-daemon",
     "battery",
     "custom/notification"
   ],
@@ -22,6 +23,17 @@
   "tray": {
     "spacing": 10
   },
+  "power-profiles-daemon": {
+  "format": "{icon}",
+  "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+  "tooltip": true,
+  "format-icons": {
+    "default": "",
+    "performance": "",
+    "balanced": "",
+    "power-saver": ""
+  }
+},
   "custom/notification": {
     "tooltip": false,
     "format": "{icon}",

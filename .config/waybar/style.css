@@ -132,6 +132,7 @@
 }
 
 /* --- Right Modules (Single, Seamless Bar ) --- */
+#power-profiles-daemon,
 #custom-uptime,
 #custom-notification,
 #bluetooth,
@@ -151,10 +152,23 @@
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+#backlight,
+#pulseaudio,
+#power-profiles-daemon,
+#battery,
+#language,
+#custom-uptime,
+#cpu,
+#custom-notification{
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
 #language {
   min-width: 7px;
 }
 
+#power-profiles-daemon:hover,
 #custom-notification:hover,
 #language:hover,
 #bluetooth:hover,
