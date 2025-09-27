@@ -202,10 +202,9 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/.ripgrep.rc"
 # export PATH="$PATH:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
 alias nv="nvim"
-alias lg="lazygit"
+alias lg="lazygit -ucf /home/val/.config/lazygit/config.yml"
 alias lzd="sudo /home/val/.local/bin/lazydocker"
 alias docker="sudo docker"
-alias fd="fdfind"
 
 # eval "$(thefuck --alias fk)"
 

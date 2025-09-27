@@ -15,10 +15,11 @@ config.keys = {
 
 -- For example, changing the color scheme:
 config.color_scheme = "Catppuccin Mocha"
--- config.allow_square_glyphs_to_overflow_width = "Always"
-config.warn_about_missing_glyphs = false
+config.allow_square_glyphs_to_overflow_width = "Always"
+config.warn_about_missing_glyphs = true
 config.font = wezterm.font_with_fallback({
   "FiraCode Nerd Font Propo Med",
+  "Noto Sans Symbols Medium",
   "IosevkaTerm Nerd Font Mono",
   "Symbols Nerd Font Mono",
 })

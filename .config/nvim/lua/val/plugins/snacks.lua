@@ -10,6 +10,13 @@ return {
       ft = "text",
     },
     picker = {
+      layout = {
+        cycle = true,
+        --- Use the default layout or vertical if the window is too narrow
+        preset = function()
+          return vim.o.columns >= 129 and "default" or "vertical"
+        end,
+      },
       win = {
         input = {
           keys = {
@@ -51,6 +58,7 @@ return {
       -- },
       enabled = true,
     },
+
     bigfile = { enabled = true },
     dashboard = {
       enabled = true,
