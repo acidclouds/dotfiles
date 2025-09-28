@@ -230,6 +230,7 @@ return {
                   end,
                   mode = { "n", "i" },
                 },
+                ["<c-o>"] = "edit"
               },
             },
           },

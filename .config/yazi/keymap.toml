@@ -38,6 +38,16 @@ on = "o"
 run = "disable"
 desc = ""
 
+[[mgr.prepend_keymap]]
+on   = "<C-k>"
+run  = "mgr:seek -5"
+desc = ""
+
+[[mgr.prepend_keymap]]
+on   = "<C-j>"
+run  = "mgr:seek 5"
+desc = ""
+
 [[input.prepend_keymap]]
 on   = "<Up>"
 run  = "mgr:arrow prev"
@@ -52,4 +62,5 @@ desc = ""
 on   = "<Right>"
 run  = ["input:close", "mgr:plugin augment-command -- enter"]
 desc = ""
+
 
