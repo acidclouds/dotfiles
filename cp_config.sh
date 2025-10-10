@@ -1,6 +1,5 @@
 cp ~/.zshrc .
 cp ~/.wezterm.lua .
-cp ~/.tmux.conf .
 cp ~/.config/.lessfilter ./.config/
 cp ~/.config/chromium-flags.conf ./.config/
 cp ~/.config/starship.toml ./.config/
