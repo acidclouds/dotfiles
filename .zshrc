@@ -54,6 +54,8 @@ COMPLETION_WAITING_DOTS="true"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+
+
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # You can set one of the optional three formats:
@@ -286,4 +288,27 @@ eval "$(starship init zsh)"
 #  	tmux new-session -A -s val
 # fi
 
+_zsh_history_file="${HISTFILE:-$HOME/.zsh_history}"
+_ssh_hosts_from_history=()
+
+# Check if the history file exists and is readable before proceeding.
+if [[ -r "$_zsh_history_file" ]]; then
+    # 1. Run the command to filter for SSH commands and extract user@host.
+    # 2. Use the Zsh '(f)' flag within an array assignment to split the
+    #    newline-separated output of the command directly into the array.
+    _ssh_hosts_from_history=("${(@f)$(grep -E ';ssh .*@' "$_zsh_history_file" | grep -E -o '[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+' | sort -u)}")
+fi
+
+# If the array was successfully populated with one or more hosts,
+# then configure zstyle to use this list for completion.
+if (( ${#_ssh_hosts_from_history[@]} )); then
+  zstyle ':completion:*:ssh:*' users-hosts $_ssh_hosts_from_history
+  zstyle ':completion:*:scp:*' users-hosts $_ssh_hosts_from_history
+  zstyle ':completion:*:sftp:*' users-hosts $_ssh_hosts_from_history
+fi
+zstyle ':completion:*:ssh:argument-1:*' tag-order users
+
+
+# Clean up the temporary variables so they don't linger in the shell.
+unset _zsh_history_file _ssh_hosts_from_history
 
