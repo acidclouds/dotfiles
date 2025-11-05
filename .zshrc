@@ -199,7 +199,7 @@ alias ls="eza -l -a --group-directories-first --icons=always"
 alias lst="eza -l -a --group-directories-first --total-size --icons=always"
 alias cat="bat --paging=never"
 eval "$(zoxide init zsh)"
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin:/home/val/.cargo/bin"
 export RIPGREP_CONFIG_PATH="$HOME/.config/.ripgrep.rc" 
 # export PATH="$PATH:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
@@ -207,6 +207,7 @@ alias nv="nvim"
 alias lg="lazygit -ucf /home/val/.config/lazygit/config.yml"
 alias lzd="sudo /home/val/.local/bin/lazydocker"
 alias docker="sudo docker"
+alias conda_init="source ~/.start_conda"
 
 # eval "$(thefuck --alias fk)"
 
@@ -311,4 +312,3 @@ zstyle ':completion:*:ssh:argument-1:*' tag-order users
 
 # Clean up the temporary variables so they don't linger in the shell.
 unset _zsh_history_file _ssh_hosts_from_history
-

@@ -1,5 +1,5 @@
 return {
-  "acidclouds/snacks.nvim",
+  "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
   opts = {
@@ -20,8 +20,8 @@ return {
       win = {
         input = {
           keys = {
-            ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
-            ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+            ["<c-k>"] = { "preview_scroll_up", mode = { "i", "n" } },
+            ["<c-j>"] = { "preview_scroll_down", mode = { "i", "n" } },
             ["<c-h>"] = { "preview_scroll_left", mode = { "i", "n" } },
             ["<c-l>"] = { "preview_scroll_right", mode = { "i", "n" } },
             ["h"] = { "list_scroll_left", mode = { "n" } },
@@ -30,16 +30,16 @@ return {
         },
         list = {
           keys = {
-            ["<c-u>"] = "preview_scroll_up",
-            ["<c-d>"] = "preview_scroll_down",
+            ["<c-k>"] = "preview_scroll_up",
+            ["<c-j>"] = "preview_scroll_down",
             ["<c-h>"] = "preview_scroll_left",
             ["<c-l>"] = "preview_scroll_right",
           },
         },
         preview = {
           keys = {
-            ["<c-u>"] = "preview_scroll_up",
-            ["<c-d>"] = "preview_scroll_down",
+            ["<c-k>"] = "preview_scroll_up",
+            ["<c-j>"] = "preview_scroll_down",
             ["<c-h>"] = "preview_scroll_left",
             ["<c-l>"] = "preview_scroll_right",
           },
@@ -91,7 +91,7 @@ return {
         { section = "startup" },
       },
     },
-    image = { enabled = true },
+    image = { enabled = true, doc = { enabled = false } },
     indent = {
       enabled = true,
       indent = {
@@ -590,6 +590,20 @@ return {
       end,
       desc = "Toggle Render Markdown",
     },
+    {
+      "<leader>K",
+      function()
+        Snacks.image.doc.hover()
+      end,
+      desc = "Preview doc image",
+    },
+    {
+      "<leader>I",
+      function()
+        Snacks.image.doc.hover_close()
+      end,
+      desc = "Preview doc image",
+    },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {
@@ -606,6 +620,7 @@ return {
 
         -- Create some toggle mappings
         Snacks.toggle.animate():map("<leader>ua")
+        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>ur")
         Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
         Snacks.toggle.option("list", { name = "󱁐 List (Visible Whitespace)" }):map("<leader>ul")
         Snacks.toggle
