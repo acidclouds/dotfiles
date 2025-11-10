@@ -17,6 +17,18 @@ return {
           return vim.o.columns >= 129 and "default" or "vertical"
         end,
       },
+      actions = {
+        list_scroll_right = function(picker)
+          if picker.list.win:valid() then
+            picker.list.win:hscroll()
+          end
+        end,
+        list_scroll_left = function(picker)
+          if picker.list.win:valid() then
+            picker.list.win:hscroll(true)
+          end
+        end,
+      },
       win = {
         input = {
           keys = {
@@ -34,6 +46,8 @@ return {
             ["<c-j>"] = "preview_scroll_down",
             ["<c-h>"] = "preview_scroll_left",
             ["<c-l>"] = "preview_scroll_right",
+            ["h"] = { "list_scroll_left", mode = { "n" } },
+            ["l"] = { "list_scroll_right", mode = { "n" } },
           },
         },
         preview = {
@@ -69,7 +83,6 @@ return {
           cmd = "ascii-image-converter ~/.config/max.png -c -C -H 25; sleep .1",
           height = 28,
           width = 61,
-          -- align = "right",
         },
         { pane = 1, section = "keys", gap = 1, padding = 1 },
         { pane = 1, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
@@ -132,8 +145,7 @@ return {
       },
     },
     scroll = {
-      enabled = true,
-      animate_repeat = { duration = { step = 0, total = 0 } },
+      enabled = true
     },
     win = { enabled = true },
     words = { enabled = true },
@@ -591,19 +603,12 @@ return {
       desc = "Toggle Render Markdown",
     },
     {
-      "<leader>K",
+      "<leader>P",
       function()
         Snacks.image.doc.hover()
       end,
       desc = "Preview doc image",
-    },
-    {
-      "<leader>I",
-      function()
-        Snacks.image.doc.hover_close()
-      end,
-      desc = "Preview doc image",
-    },
+    }
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {
