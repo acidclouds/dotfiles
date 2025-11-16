@@ -54,6 +54,8 @@ COMPLETION_WAITING_DOTS="true"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+
+
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # You can set one of the optional three formats:
@@ -98,7 +100,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=list-border:#f5c2e7 \
 --color=border:#313244,label:#cdd6f4"
 
-show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else batcat -n --color=always {}; fi"
+show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always {}; fi"
 #
  # export FZF_CTRL_T_OPTS="--preview-window 'down:+{2}-5' --preview '$show_file_or_dir_preview'"
  # export FZF_ALT_C_OPTS="--preview-window 'down:+{2}-5' --preview 'eza --tree --color=always {} | head -200'"
@@ -132,7 +134,7 @@ export FZF_CTRL_R_OPTS="
   --input-border rounded 
   --list-border rounded 
   --preview-border rounded 
-  --preview 'echo {2..} | batcat --color=always -pl sh'
+  --preview 'echo {2..} | bat --color=always -pl sh'
   --preview-window up:3:wrap
   --color header:italic"
 
@@ -173,8 +175,8 @@ export LC_COLLATE=C
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
+SAVEHIST=10000
+HISTSIZE=9999
 
 # zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 function my_init() {
@@ -195,22 +197,22 @@ source $ZSH/oh-my-zsh.sh
 export BAT_THEME=Coldark-Dark
 alias ls="eza -l -a --group-directories-first --icons=always"
 alias lst="eza -l -a --group-directories-first --total-size --icons=always"
-alias cat="batcat --paging=never"
+alias cat="bat --paging=never"
 eval "$(zoxide init zsh)"
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin:/home/val/.cargo/bin"
 export RIPGREP_CONFIG_PATH="$HOME/.config/.ripgrep.rc" 
 # export PATH="$PATH:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
 alias nv="nvim"
-alias lg="lazygit"
+alias lg="lazygit -ucf /home/val/.config/lazygit/config.yml"
 alias lzd="sudo /home/val/.local/bin/lazydocker"
 alias docker="sudo docker"
-alias fd="fdfind"
+alias conda_init="source ~/.start_conda"
 
-eval "$(thefuck --alias fk)"
+# eval "$(thefuck --alias fk)"
 
 function sfg() {
-  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
+  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'bat --style=numbers --color=always --highlight-line {2} {1}'
 }
 
 function go_test() {
@@ -269,6 +271,9 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 export LS_COLORS="$(vivid generate catppuccin-mocha)"
 export EDITOR=nvim
 
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
+
 eval "$(starship init zsh)"
 
   # autoload -U compinit; compinit
@@ -280,8 +285,30 @@ eval "$(starship init zsh)"
 
   # autoload -U compinit; compinit
 
-if ! [[ -v TMUX ]]; then
- 	tmux new-session -A -s val
+# if ! [[ -v TMUX ]]; then
+#  	tmux new-session -A -s val
+# fi
+
+_zsh_history_file="${HISTFILE:-$HOME/.zsh_history}"
+_ssh_hosts_from_history=()
+
+# Check if the history file exists and is readable before proceeding.
+if [[ -r "$_zsh_history_file" ]]; then
+    # 1. Run the command to filter for SSH commands and extract user@host.
+    # 2. Use the Zsh '(f)' flag within an array assignment to split the
+    #    newline-separated output of the command directly into the array.
+    _ssh_hosts_from_history=("${(@f)$(grep -E ';ssh .*@' "$_zsh_history_file" | grep -E -o '[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+' | sort -u)}")
 fi
 
+# If the array was successfully populated with one or more hosts,
+# then configure zstyle to use this list for completion.
+if (( ${#_ssh_hosts_from_history[@]} )); then
+  zstyle ':completion:*:ssh:*' users-hosts $_ssh_hosts_from_history
+  zstyle ':completion:*:scp:*' users-hosts $_ssh_hosts_from_history
+  zstyle ':completion:*:sftp:*' users-hosts $_ssh_hosts_from_history
+fi
+zstyle ':completion:*:ssh:argument-1:*' tag-order users
 
+
+# Clean up the temporary variables so they don't linger in the shell.
+unset _zsh_history_file _ssh_hosts_from_history

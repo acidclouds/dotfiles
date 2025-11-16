@@ -1,41 +1,51 @@
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "!"
 run = 'shell "$SHELL" --block'
 desc = "Open shell here"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "<F2>"
 run = "plugin toggle-pane min-parent"
 desc = "Toggle the parent pane"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "<F3>"
 run = "plugin toggle-pane min-preview"
 desc = "Toggle the preview pane"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = "F"
 run  = "filter --smart"
 desc = "Filter"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "l"
 run = "plugin augment-command -- enter"
 desc = "Enter a directory and skip directories with only a single subdirectory"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "<RIGHT>"
 run = "plugin augment-command -- enter"
 desc = "Enter a directory and skip directories with only a single subdirectory"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "<ENTER>"
 run = "plugin augment-command -- enter"
 desc = "Enter a directory and skip directories with only a single subdirectory"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "o"
 run = "disable"
+desc = ""
+
+[[mgr.prepend_keymap]]
+on   = "<C-k>"
+run  = "mgr:seek -5"
+desc = ""
+
+[[mgr.prepend_keymap]]
+on   = "<C-j>"
+run  = "mgr:seek 5"
 desc = ""
 
 [[input.prepend_keymap]]
@@ -52,4 +62,5 @@ desc = ""
 on   = "<Right>"
 run  = ["input:close", "mgr:plugin augment-command -- enter"]
 desc = ""
+
 
