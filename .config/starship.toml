@@ -8,9 +8,9 @@ palette = "noctalia"
 # Starship modules
 [character]
 # Note the use of Catppuccin color 'peach'
-success_symbol = "[[ ](green) ❯](peach)"
-error_symbol = "[[ ](red) ❯](peach)"
-vimcmd_symbol = "[  ❮](subtext1)" # For use with zsh-vi-mode
+success_symbol = "[[ ](green) ❯](peach)"
+error_symbol = "[[ ](red) ❯](peach)"
+vimcmd_symbol = "[  ❮](subtext1)" # For use with zsh-vi-mode
 
 [git_branch]
 style = "bold mauve"
@@ -212,6 +212,13 @@ symbol = "󰍛 "
 
 [meson]
 symbol = "󰔷 "
+
+# The 🛜 + uuid that shows up over ssh on kubernetes/cri-o nodes. Those hosts
+# keep dozens of stale /run/netns bind-mounts that all resolve to the initial
+# namespace inode, so starship matches one at random and prints a name that is
+# neither meaningful nor stable. Renders nothing on a normal machine anyway.
+[netns]
+disabled = true
 
 [nim]
 symbol = "󰆥 "
