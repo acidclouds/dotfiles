@@ -54,6 +54,8 @@ COMPLETION_WAITING_DOTS="true"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+
+
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # You can set one of the optional three formats:
@@ -72,8 +74,12 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 
 # autoload -Uz compinit; compinit
-# Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
+# Set up fzf key bindings and fuzzy completion.
+# `fzf --zsh` needs fzf >= 0.48 - ubuntu's packaged build is often older,
+# in which case install a current release (see README) or skip the bindings.
+if fzf --zsh >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 # ZVM_INIT_MODE=sourcing
 plugins=(
   git
@@ -88,15 +94,15 @@ export FZF_DEFAULT_OPTS=" \
 --border=rounded \
 --input-border=rounded \
 --list-border=rounded \
---preview-border=rounded \
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f5c2e7 \
---color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
---color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f5c2e7 \
---color=selected-bg:#45475a \
---color=preview-border:#89b4fa \
---color=input-border:#cba6f7 \
---color=list-border:#f5c2e7 \
---color=border:#313244,label:#cdd6f4"
+--preview-border=rounded"
+# --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f5c2e7 \
+# --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+# --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f5c2e7 \
+# --color=selected-bg:#45475a \
+# --color=preview-border:#89b4fa \
+# --color=input-border:#cba6f7 \
+# --color=list-border:#f5c2e7 \
+# --color=border:#313244,label:#cdd6f4"
 
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else batcat -n --color=always {}; fi"
 #
@@ -173,8 +179,8 @@ export LC_COLLATE=C
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
+SAVEHIST=10000
+HISTSIZE=9999
 
 # zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 function my_init() {
@@ -196,21 +202,24 @@ export BAT_THEME=Coldark-Dark
 alias ls="eza -l -a --group-directories-first --icons=always"
 alias lst="eza -l -a --group-directories-first --total-size --icons=always"
 alias cat="batcat --paging=never"
-eval "$(zoxide init zsh)"
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin:/home/val/.local/bin:/home/val/.cargo/bin"
 export RIPGREP_CONFIG_PATH="$HOME/.config/.ripgrep.rc" 
 # export PATH="$PATH:/home/val/.local/bin"
 export XDG_CONFIG_HOME=$HOME/.config/
 alias nv="nvim"
-alias lg="lazygit"
+alias lg="lazygit -ucf /home/val/.config/lazygit/config.yml"
 alias lzd="sudo /home/val/.local/bin/lazydocker"
 alias docker="sudo docker"
+alias conda_init="source ~/.start_conda"
+# ubuntu ships bat/fd as batcat/fdfind to avoid name clashes
 alias fd="fdfind"
+alias bat="batcat"
 
-eval "$(thefuck --alias fk)"
+# eval "$(thefuck --alias fk)"
 
 function sfg() {
-  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up' --ansi --no-sort --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
+  rg --line-number --no-heading --color=always --smart-case $1 | fzf -d ':' --style full --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview,ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up,enter:become(nvim {1} +{2})' --ansi --no-sort --border 'rounded' --preview-border 'rounded' --input-border 'rounded' --list-border 'rounded' --preview-window 'right,<60(down,50%):+{2}-5' --preview 'batcat --style=numbers --color=always --highlight-line {2} {1}'
 }
 
 function go_test() {
@@ -233,9 +242,9 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
 zstyle ':completion:*:descriptions' format '[%d]'
 # set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-zstyle ':completion:*' menu no
+#zstyle ':completion:*' menu no
 zstyle ':completion:*' fzf-search-display true
 zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $word'
 zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
@@ -258,7 +267,7 @@ export LESSOPEN='| ~/.config/.lessfilter "%s"'
 # custom fzf flags
 # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
 # zstyle ':fzf-tab:*' fzf-flags --bind='tab:accept,ctrl-w:toggle-preview-wrap,ctrl-p:toggle-preview'
-zstyle ':fzf-tab:*' fzf-bindings 'tab:accept' 'ctrl-w:toggle-preview-wrap' 'ctrl-p:toggle-preview' 'ctrl-d:preview-half-page-down' 'ctrl-u:preview-half-page-up'
+zstyle ':fzf-tab:*' fzf-bindings 'tab:accept' 'ctrl-w:toggle-preview-wrap' 'ctrl-p:toggle-preview' 'ctrl-d:preview-half-page-down' 'ctrl-u:preview-half-page-up' 'ctrl-a:toggle-all'
 # To make fzf-tab follow FZF_DEFAULT_OPTS.
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
 # zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
@@ -266,10 +275,13 @@ zstyle ':fzf-tab:*' fzf-bindings 'tab:accept' 'ctrl-w:toggle-preview-wrap' 'ctrl
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
-export LS_COLORS="$(vivid generate catppuccin-mocha)"
+command -v vivid >/dev/null && export LS_COLORS="$(vivid generate catppuccin-mocha)"
 export EDITOR=nvim
 
-eval "$(starship init zsh)"
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
+
+command -v starship >/dev/null && eval "$(starship init zsh)"
 
   # autoload -U compinit; compinit
 #   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -280,8 +292,33 @@ eval "$(starship init zsh)"
 
   # autoload -U compinit; compinit
 
-if ! [[ -v TMUX ]]; then
- 	tmux new-session -A -s val
+# if ! [[ -v TMUX ]]; then
+#  	tmux new-session -A -s val
+# fi
+
+_zsh_history_file="${HISTFILE:-$HOME/.zsh_history}"
+_ssh_hosts_from_history=()
+
+# Check if the history file exists and is readable before proceeding.
+if [[ -r "$_zsh_history_file" ]]; then
+    # 1. Run the command to filter for SSH commands and extract user@host.
+    # 2. Use the Zsh '(f)' flag within an array assignment to split the
+    #    newline-separated output of the command directly into the array.
+    _ssh_hosts_from_history=("${(@f)$(grep -E ';ssh .*@' "$_zsh_history_file" | grep -E -o '[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+' | sort -u)}")
 fi
 
+# If the array was successfully populated with one or more hosts,
+# then configure zstyle to use this list for completion.
+if (( ${#_ssh_hosts_from_history[@]} )); then
+  zstyle ':completion:*:ssh:*' users-hosts $_ssh_hosts_from_history
+  zstyle ':completion:*:scp:*' users-hosts $_ssh_hosts_from_history
+  zstyle ':completion:*:sftp:*' users-hosts $_ssh_hosts_from_history
+fi
+zstyle ':completion:*:ssh:argument-1:*' tag-order users
 
+
+# Clean up the temporary variables so they don't linger in the shell.
+unset _zsh_history_file _ssh_hosts_from_history
+
+# Added by Qwen Code standalone installer
+export PATH="/home/val/.local/bin:$PATH"

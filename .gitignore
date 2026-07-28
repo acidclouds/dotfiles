@@ -1,2 +1,5 @@
-/.config/nvim/lazy-lock.json
+*.bak
+__pycache__/
 
+# resolved by lazy.nvim on first start
+/.config/nvim/lazy-lock.json

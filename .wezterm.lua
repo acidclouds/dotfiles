@@ -6,53 +6,69 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 config.keys = {
-	{
-		key = "n",
-		mods = "SHIFT|CTRL",
-		action = wezterm.action.DisableDefaultAssignment,
-	},
+  {
+    key = "n",
+    mods = "SHIFT|CTRL",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  {
+    key = "Enter",
+    mods = "ALT",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  {
+    key = 'F',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.Search({ CaseInSensitiveString = '' })
+  },
 }
 
 -- For example, changing the color scheme:
-config.color_scheme = "Catppuccin Mocha"
--- config.allow_square_glyphs_to_overflow_width = "Always"
-config.warn_about_missing_glyphs = false
+-- config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "Noctalia"
+config.allow_square_glyphs_to_overflow_width = "Always"
+config.warn_about_missing_glyphs = true
 config.font = wezterm.font_with_fallback({
-	"FiraCode Nerd Font Propo Med",
-	"IosevkaTerm Nerd Font Mono",
-	"Symbols Nerd Font Mono",
+  "FiraCode Nerd Font Propo Med",
+  "Noto Sans Symbols Medium",
+  "IosevkaTerm Nerd Font Mono",
+  "Symbols Nerd Font Mono",
 })
+
 -- config.harfbuzz_features = { "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
 config.harfbuzz_features = {
-	"ss01",
-	"ss02",
-	"ss03",
-	"ss04",
-	"ss05",
-	"ss06",
-	"ss07",
-	"ss08",
-	"ss09",
-	"ss10",
-	-- "cv01",
-	-- "cv02",
-	"cv04",
-	-- "cv07",
-	"cv14",
-	"cv15",
-	-- "cv17",
-	"cv18",
-	"cv24",
-	"cv25",
-	"cv26",
-	-- "cv27",
-	"cv28",
-	-- "cv29",
-	"cv30",
-	-- "cv31",
-	"cv32",
-	-- "zero",
+  "ss01",
+  "ss02",
+  "ss03",
+  "ss04",
+  "ss05",
+  "ss06",
+  "ss07",
+  "ss08",
+  "ss09",
+  "ss10",
+  -- "cv01",
+  -- "cv02",
+  "cv04",
+  -- "cv07",
+  "cv14",
+  "cv15",
+  -- "cv17",
+  "cv18",
+  "cv24",
+  "cv25",
+  "cv26",
+  -- "cv27",
+  "cv28",
+  -- "cv29",
+  "cv30",
+  -- "cv31",
+  "cv32",
+  -- "zero",
 }
 config.font_size = 14
 config.enable_tab_bar = false
+config.window_background_opacity = 0.97
+
+wezterm.add_to_config_reload_watch_list(wezterm.home_dir .. "/.config/wezterm/colors/Noctalia.toml")
 return config
